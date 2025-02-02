@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
         hit.disabled = true;
         setTimeout(() => {
           play_again();
-        }, 1000);
+        }, 2000);
       } else if (value_player_cnt == 21) {
         ///incepe dealerHit
         stay.disabled = true;
