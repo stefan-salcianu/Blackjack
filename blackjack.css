@@ -1,8 +1,20 @@
+:root {
+  --grey-tone: silver;
+  --golden-tone: rgb(196, 204, 109);
+}
 .table {
-  height: 100vh;
-  width: 100vw;
-  background-color: rgb(38, 150, 38);
-  position: relative;
+  padding-top: 20px;
+  height: 70vh;
+  width: 70vw;
+  background-color: var(--golden-tone);
+  position: absolute;
+  border: double;
+  border-radius: 10px;
+  border-width: 15px;
+  border-color: var(--grey-tone);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 .table_context {
   height: 100vh;
@@ -12,30 +24,12 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
-#player_card {
-  height: 120px;
-  width: 100px;
-  border-radius: 5px;
-  position: absolute;
-  left: 50%;
-  top: 85%;
-  transform: translate(-50%, -50%);
-}
-#player_card0 {
-  height: 120px;
-  width: 100px;
-  border-radius: 5px;
-  position: absolute;
-  left: 51%;
-  top: 85%;
-  transform: translate(-50%, -50%);
-}
 #dealer_card1 {
   height: 120px;
   width: 100px;
   border-radius: 5px;
   position: absolute;
-  left: 46%;
+  left: 44%;
   top: 45%;
   transform: translate(-50%, -50%);
   transition: left 0.7s, right 0.7s;
@@ -45,7 +39,7 @@
   width: 100px;
   border-radius: 5px;
   position: absolute;
-  left: 54%;
+  left: 56%;
   top: 45%;
   transform: translate(-50%, -50%);
   backface-visibility: hidden;
@@ -111,12 +105,31 @@
 img[src=""] {
   display: none;
 }
+
+#player_card {
+  height: 120px;
+  width: 100px;
+  border-radius: 5px;
+  position: absolute;
+  left: 47%;
+  top: 85%;
+  transform: translate(-50%, -50%);
+}
+#player_card0 {
+  height: 120px;
+  width: 100px;
+  border-radius: 5px;
+  position: absolute;
+  left: 49%;
+  top: 85%;
+  transform: translate(-50%, -50%);
+}
 #player_card1 {
   height: 120px;
   width: 100px;
   border-radius: 5px;
   position: absolute;
-  left: 52%;
+  left: 51%;
   top: 85%;
   transform: translate(-50%, -50%);
 }
@@ -134,7 +147,7 @@ img[src=""] {
   width: 100px;
   border-radius: 5px;
   position: absolute;
-  left: 54%;
+  left: 55%;
   top: 85%;
   transform: translate(-50%, -50%);
 }
@@ -143,7 +156,7 @@ img[src=""] {
   width: 100px;
   border-radius: 5px;
   position: absolute;
-  left: 55%;
+  left: 57%;
   top: 85%;
   transform: translate(-50%, -50%);
 }
@@ -152,7 +165,7 @@ img[src=""] {
   width: 100px;
   border-radius: 5px;
   position: absolute;
-  left: 56%;
+  left: 59%;
   top: 85%;
   transform: translate(-50%, -50%);
 }
@@ -161,7 +174,7 @@ img[src=""] {
   width: 100px;
   border-radius: 5px;
   position: absolute;
-  left: 57%;
+  left: 61%;
   top: 85%;
   transform: translate(-50%, -50%);
 }

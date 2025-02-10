@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     value_player.innerText = "Your value: " + String(value_player_cnt);
     cards.splice(randomj, 1);
-    dealer2.src = "images/card back red.png";
+    dealer2.src = "images/oie_jpg.png";
     randomi = Math.floor(Math.random() * cards.length);
     hidden_card = cards[randomi].image;
     if (cards[randomi].value == "A") {
@@ -192,8 +192,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   stay.addEventListener("click", () => {
     setTimeout(() => {
-      dealer2.style.left = "40%";
-      dealer1.style.left = "32%";
+      dealer2.style.left = "39%";
+      dealer1.style.left = "28%";
     }, 700);
     turnHiddenCard();
   });
