@@ -24,11 +24,15 @@ document.addEventListener("DOMContentLoaded", () => {
   let value_dealer_cnt = 0;
   let cards_player = 0;
   let cards_dealer = 2;
-
+  // localStorage.setItem("wins", "0");
   if (!localStorage.getItem("loses")) {
     localStorage.setItem("loses", "0");
   }
+  if (!localStorage.getItem("wins")) {
+    localStorage.setItem("wins", "0");
+  }
   let loses = parseInt(localStorage.getItem("loses"));
+  let wins = parseInt(localStorage.getItem("wins"));
   const loses_text = document.createElement("p");
   loses_text.innerText = "Loses: " + String(loses);
   loses_text.style.fontFamily = "'Times New Roman', Times, serif";
@@ -36,6 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
   loses_text.style.position = "absolute";
   loses_text.style.left = "5%";
   loses_text.style.top = "0%";
+  const wins_text = document.createElement("p");
+  wins_text.innerText = "Wins: " + String(wins);
+  wins_text.style.fontFamily = "'Times New Roman', Times, serif";
+  wins_text.style.fontSize = 30 + "px";
+  wins_text.style.position = "absolute";
+  wins_text.style.right = "5%";
+  wins_text.style.top = "0%";
   const value_dealer = document.createElement("p");
   value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
   value_dealer.style.fontFamily = "'Times New Roman', Times, serif";
@@ -61,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
   mockText.style.color = "darkgrey";
   table.appendChild(value_dealer);
   table.appendChild(value_player);
+  table.appendChild(wins_text);
   table.appendChild(loses_text);
   table.appendChild(mockText);
 
@@ -125,7 +137,10 @@ document.addEventListener("DOMContentLoaded", () => {
     hit.disabled = false;
     stay.disabled = false;
     if (value_player_cnt == 21) {
-      console.log("sex");
+      wins = parseInt(localStorage.getItem("wins"));
+      wins += 1;
+      wins_text.innerText = "Wins: " + String(wins);
+      localStorage.setItem("wins", String(wins));
       blackjack = true;
       setTimeout(() => {
         turnHiddenCard();
@@ -217,21 +232,6 @@ document.addEventListener("DOMContentLoaded", () => {
         turnHiddenCard();
       }
       value_player.innerText = "Your value: " + String(value_player_cnt);
-    } else {
-      if (value_player_cnt == 21) {
-        ///incepe dealerHit
-        stay.disabled = true;
-        hit.disabled = true;
-        setTimeout(() => {
-          setTimeout(() => {
-            dealerHit(cards_dealer);
-            setTimeout(() => {
-              play_again();
-            }, 2000);
-          }, 700);
-        }, 700);
-        turnHiddenCard();
-      }
     }
   });
   stay.addEventListener("click", () => {
@@ -294,10 +294,10 @@ document.addEventListener("DOMContentLoaded", () => {
       hit6.src = "";
       value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
       value_player.innerText = "Your value: " + String(value_dealer_cnt);
-      busted_text = document.querySelector(".busted");
       busted = false;
       dealer1.style.left = "44%";
       dealer2.style.left = "56%";
+      cards_dealer = 2;
       deal_cards();
     }
   }
@@ -319,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function dealerHit(cards_dealer) {
     if (value_dealer_cnt >= 17) {
-      // checkWinner();
+      checkWinner();
       return;
     }
     cards_dealer += 1;
@@ -353,5 +353,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     ///to be implemented
     ///vezi switch de la hit
+  }
+  function checkWinner() {
+    if (value_dealer_cnt < value_player_cnt || value_dealer_cnt > 21) {
+      wins = parseInt(localStorage.getItem("wins"));
+      wins += 1;
+      wins_text.innerText = "Wins: " + String(wins);
+      localStorage.setItem("wins", String(wins));
+    } else if (value_dealer_cnt > value_player_cnt) {
+      loses = parseInt(localStorage.getItem("loses"));
+      loses += 1;
+      loses_text.innerText = "Loses: " + String(loses);
+      localStorage.setItem("loses", String(loses));
+    }
   }
 });
