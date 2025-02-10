@@ -27,7 +27,7 @@
 #dealer_card1 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 44%;
   top: 45%;
@@ -37,7 +37,7 @@
 #dealer_card2 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 56%;
   top: 45%;
@@ -45,10 +45,76 @@
   backface-visibility: hidden;
   will-change: transform; /* Optimizes rendering */
 }
+#dealer_card3 {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  backface-visibility: hidden;
+  will-change: transform; /* Optimizes rendering */
+}
+#dealer_card4 {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 61%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  backface-visibility: hidden;
+  will-change: transform; /* Optimizes rendering */
+}
+#dealer_card5 {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 72%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  backface-visibility: hidden;
+  will-change: transform; /* Optimizes rendering */
+}
+#dealer_card6 {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 83%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  backface-visibility: hidden;
+  will-change: transform; /* Optimizes rendering */
+}
+/* #dealer_card2 {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 56%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  backface-visibility: hidden;
+  will-change: transform;  
+}
+#dealer_card2 {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 56%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+  backface-visibility: hidden;
+  will-change: transform; 
+} */
 #dealer {
   height: 150px;
   width: 150px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 50%;
   top: 15%;
@@ -109,7 +175,7 @@ img[src=""] {
 #player_card {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 47%;
   top: 85%;
@@ -118,7 +184,7 @@ img[src=""] {
 #player_card0 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 49%;
   top: 85%;
@@ -127,7 +193,7 @@ img[src=""] {
 #player_card1 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 51%;
   top: 85%;
@@ -136,7 +202,7 @@ img[src=""] {
 #player_card2 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 53%;
   top: 85%;
@@ -145,7 +211,7 @@ img[src=""] {
 #player_card3 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 55%;
   top: 85%;
@@ -154,7 +220,7 @@ img[src=""] {
 #player_card4 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 57%;
   top: 85%;
@@ -163,7 +229,7 @@ img[src=""] {
 #player_card5 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 59%;
   top: 85%;
@@ -172,7 +238,7 @@ img[src=""] {
 #player_card6 {
   height: 120px;
   width: 100px;
-  border-radius: 5px;
+  border-radius: 12px;
   position: absolute;
   left: 61%;
   top: 85%;

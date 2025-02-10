@@ -3,62 +3,62 @@
     {
       "suit": "hearts",
       "value": "2",
-      "image": "https://deckofcardsapi.com/static/img/2H.png"
+      "image": "images/2_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "3",
-      "image": "https://deckofcardsapi.com/static/img/3H.png"
+      "image": "images/3_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "4",
-      "image": "https://deckofcardsapi.com/static/img/4H.png"
+      "image": "images/4_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "5",
-      "image": "https://deckofcardsapi.com/static/img/5H.png"
+      "image": "images/5_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "6",
-      "image": "https://deckofcardsapi.com/static/img/6H.png"
+      "image": "images/6_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "7",
-      "image": "https://deckofcardsapi.com/static/img/7H.png"
+      "image": "images/7_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "8",
-      "image": "https://deckofcardsapi.com/static/img/8H.png"
+      "image": "images/8_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "9",
-      "image": "https://deckofcardsapi.com/static/img/9H.png"
+      "image": "images/9_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/0H.png"
+      "image": "images/10_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/JH.png"
+      "image": "images/J_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/QH.png"
+      "image": "images/Q_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/KH.png"
+      "image": "images/K_hearts.png"
     },
     {
       "suit": "hearts",
@@ -66,68 +66,68 @@
 
       "value1": "1",
       "value11": "11",
-      "image": "https://deckofcardsapi.com/static/img/AH.png"
+      "image": "images/A_hearts.png"
     },
 
     {
       "suit": "diamonds",
       "value": "2",
-      "image": "https://deckofcardsapi.com/static/img/2D.png"
+      "image": "images/2_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "3",
-      "image": "https://deckofcardsapi.com/static/img/3D.png"
+      "image": "images/3_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "4",
-      "image": "https://deckofcardsapi.com/static/img/4D.png"
+      "image": "images/4_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "5",
-      "image": "https://deckofcardsapi.com/static/img/5D.png"
+      "image": "images/5_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "6",
-      "image": "https://deckofcardsapi.com/static/img/6D.png"
+      "image": "images/6_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "7",
-      "image": "https://deckofcardsapi.com/static/img/7D.png"
+      "image": "images/7_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "8",
-      "image": "https://deckofcardsapi.com/static/img/8D.png"
+      "image": "images/8_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "9",
-      "image": "https://deckofcardsapi.com/static/img/9D.png"
+      "image": "images/9_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/0D.png"
+      "image": "images/10_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/JD.png"
+      "image": "images/J_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/QD.png"
+      "image": "images/Q_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/KD.png"
+      "image": "images/K_diamonds.png"
     },
     {
       "suit": "diamonds",
@@ -135,68 +135,68 @@
 
       "value1": "1",
       "value11": "11",
-      "image": "https://deckofcardsapi.com/static/img/AD.png"
+      "image": "images/A_diamonds.png"
     },
 
     {
       "suit": "clubs",
       "value": "2",
-      "image": "https://deckofcardsapi.com/static/img/2C.png"
+      "image": "images/2_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "3",
-      "image": "https://deckofcardsapi.com/static/img/3C.png"
+      "image": "images/3_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "4",
-      "image": "https://deckofcardsapi.com/static/img/4C.png"
+      "image": "images/4_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "5",
-      "image": "https://deckofcardsapi.com/static/img/5C.png"
+      "image": "images/5_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "6",
-      "image": "https://deckofcardsapi.com/static/img/6C.png"
+      "image": "images/6_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "7",
-      "image": "https://deckofcardsapi.com/static/img/7C.png"
+      "image": "images/7_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "8",
-      "image": "https://deckofcardsapi.com/static/img/8C.png"
+      "image": "images/8_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "9",
-      "image": "https://deckofcardsapi.com/static/img/9C.png"
+      "image": "images/9_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/0C.png"
+      "image": "images/10_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/JC.png"
+      "image": "images/J_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/QC.png"
+      "image": "images/Q_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/KC.png"
+      "image": "images/K_clubs.png"
     },
     {
       "suit": "clubs",
@@ -204,68 +204,68 @@
 
       "value1": "1",
       "value11": "11",
-      "image": "https://deckofcardsapi.com/static/img/AC.png"
+      "image": "images/A_clubs.png"
     },
 
     {
       "suit": "spades",
       "value": "2",
-      "image": "https://deckofcardsapi.com/static/img/2S.png"
+      "image": "images/2_spades.png"
     },
     {
       "suit": "spades",
       "value": "3",
-      "image": "https://deckofcardsapi.com/static/img/3S.png"
+      "image": "images/3_spades.png"
     },
     {
       "suit": "spades",
       "value": "4",
-      "image": "https://deckofcardsapi.com/static/img/4S.png"
+      "image": "images/4_spades.png"
     },
     {
       "suit": "spades",
       "value": "5",
-      "image": "https://deckofcardsapi.com/static/img/5S.png"
+      "image": "images/5_spades.png"
     },
     {
       "suit": "spades",
       "value": "6",
-      "image": "https://deckofcardsapi.com/static/img/6S.png"
+      "image": "images/6_spades.png"
     },
     {
       "suit": "spades",
       "value": "7",
-      "image": "https://deckofcardsapi.com/static/img/7S.png"
+      "image": "images/7_spades.png"
     },
     {
       "suit": "spades",
       "value": "8",
-      "image": "https://deckofcardsapi.com/static/img/8S.png"
+      "image": "images/8_spades.png"
     },
     {
       "suit": "spades",
       "value": "9",
-      "image": "https://deckofcardsapi.com/static/img/9S.png"
+      "image": "images/9_spades.png"
     },
     {
       "suit": "spades",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/0S.png"
+      "image": "images/10_spades.png"
     },
     {
       "suit": "spades",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/JS.png"
+      "image": "images/J_spades.png"
     },
     {
       "suit": "spades",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/QS.png"
+      "image": "images/Q_spades.png"
     },
     {
       "suit": "spades",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/KS.png"
+      "image": "images/K_spades.png"
     },
     {
       "suit": "spades",
@@ -273,67 +273,67 @@
 
       "value1": "1",
       "value11": "11",
-      "image": "https://deckofcardsapi.com/static/img/AS.png"
+      "image": "images/A_spades.png"
     },
     {
       "suit": "hearts",
       "value": "2",
-      "image": "https://deckofcardsapi.com/static/img/2H.png"
+      "image": "images/2_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "3",
-      "image": "https://deckofcardsapi.com/static/img/3H.png"
+      "image": "images/3_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "4",
-      "image": "https://deckofcardsapi.com/static/img/4H.png"
+      "image": "images/4_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "5",
-      "image": "https://deckofcardsapi.com/static/img/5H.png"
+      "image": "images/5_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "6",
-      "image": "https://deckofcardsapi.com/static/img/6H.png"
+      "image": "images/6_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "7",
-      "image": "https://deckofcardsapi.com/static/img/7H.png"
+      "image": "images/7_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "8",
-      "image": "https://deckofcardsapi.com/static/img/8H.png"
+      "image": "images/8_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "9",
-      "image": "https://deckofcardsapi.com/static/img/9H.png"
+      "image": "images/9_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/0H.png"
+      "image": "images/10_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/JH.png"
+      "image": "images/J_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/QH.png"
+      "image": "images/Q_hearts.png"
     },
     {
       "suit": "hearts",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/KH.png"
+      "image": "images/K_hearts.png"
     },
     {
       "suit": "hearts",
@@ -341,68 +341,68 @@
 
       "value1": "1",
       "value11": "11",
-      "image": "https://deckofcardsapi.com/static/img/AH.png"
+      "image": "images/A_hearts.png"
     },
 
     {
       "suit": "diamonds",
       "value": "2",
-      "image": "https://deckofcardsapi.com/static/img/2D.png"
+      "image": "images/2_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "3",
-      "image": "https://deckofcardsapi.com/static/img/3D.png"
+      "image": "images/3_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "4",
-      "image": "https://deckofcardsapi.com/static/img/4D.png"
+      "image": "images/4_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "5",
-      "image": "https://deckofcardsapi.com/static/img/5D.png"
+      "image": "images/5_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "6",
-      "image": "https://deckofcardsapi.com/static/img/6D.png"
+      "image": "images/6_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "7",
-      "image": "https://deckofcardsapi.com/static/img/7D.png"
+      "image": "images/7_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "8",
-      "image": "https://deckofcardsapi.com/static/img/8D.png"
+      "image": "images/8_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "9",
-      "image": "https://deckofcardsapi.com/static/img/9D.png"
+      "image": "images/9_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/0D.png"
+      "image": "images/10_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/JD.png"
+      "image": "images/J_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/QD.png"
+      "image": "images/Q_diamonds.png"
     },
     {
       "suit": "diamonds",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/KD.png"
+      "image": "images/K_diamonds.png"
     },
     {
       "suit": "diamonds",
@@ -410,143 +410,145 @@
 
       "value1": "1",
       "value11": "11",
-      "image": "https://deckofcardsapi.com/static/img/AD.png"
+      "image": "images/A_diamonds.png"
     },
 
     {
       "suit": "clubs",
       "value": "2",
-      "image": "https://deckofcardsapi.com/static/img/2C.png"
+      "image": "images/2_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "3",
-      "image": "https://deckofcardsapi.com/static/img/3C.png"
+      "image": "images/3_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "4",
-      "image": "https://deckofcardsapi.com/static/img/4C.png"
+      "image": "images/4_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "5",
-      "image": "https://deckofcardsapi.com/static/img/5C.png"
+      "image": "images/5_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "6",
-      "image": "https://deckofcardsapi.com/static/img/6C.png"
+      "image": "images/6_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "7",
-      "image": "https://deckofcardsapi.com/static/img/7C.png"
+      "image": "images/7_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "8",
-      "image": "https://deckofcardsapi.com/static/img/8C.png"
+      "image": "images/8_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "9",
-      "image": "https://deckofcardsapi.com/static/img/9C.png"
+      "image": "images/9_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/0C.png"
+      "image": "images/10_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/JC.png"
+      "image": "images/J_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/QC.png"
+      "image": "images/Q_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/KC.png"
+      "image": "images/K_clubs.png"
     },
     {
       "suit": "clubs",
       "value": "A",
+
       "value1": "1",
       "value11": "11",
-      "image": "https://deckofcardsapi.com/static/img/AC.png"
+      "image": "images/A_clubs.png"
     },
 
     {
       "suit": "spades",
       "value": "2",
-      "image": "https://deckofcardsapi.com/static/img/2S.png"
+      "image": "images/2_spades.png"
     },
     {
       "suit": "spades",
       "value": "3",
-      "image": "https://deckofcardsapi.com/static/img/3S.png"
+      "image": "images/3_spades.png"
     },
     {
       "suit": "spades",
       "value": "4",
-      "image": "https://deckofcardsapi.com/static/img/4S.png"
+      "image": "images/4_spades.png"
     },
     {
       "suit": "spades",
       "value": "5",
-      "image": "https://deckofcardsapi.com/static/img/5S.png"
+      "image": "images/5_spades.png"
     },
     {
       "suit": "spades",
       "value": "6",
-      "image": "https://deckofcardsapi.com/static/img/6S.png"
+      "image": "images/6_spades.png"
     },
     {
       "suit": "spades",
       "value": "7",
-      "image": "https://deckofcardsapi.com/static/img/7S.png"
+      "image": "images/7_spades.png"
     },
     {
       "suit": "spades",
       "value": "8",
-      "image": "https://deckofcardsapi.com/static/img/8S.png"
+      "image": "images/8_spades.png"
     },
     {
       "suit": "spades",
       "value": "9",
-      "image": "https://deckofcardsapi.com/static/img/9S.png"
+      "image": "images/9_spades.png"
     },
     {
       "suit": "spades",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/0S.png"
+      "image": "images/10_spades.png"
     },
     {
       "suit": "spades",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/JS.png"
+      "image": "images/J_spades.png"
     },
     {
       "suit": "spades",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/QS.png"
+      "image": "images/Q_spades.png"
     },
     {
       "suit": "spades",
       "value": "10",
-      "image": "https://deckofcardsapi.com/static/img/KS.png"
+      "image": "images/K_spades.png"
     },
     {
       "suit": "spades",
       "value": "A",
+
       "value1": "1",
       "value11": "11",
-      "image": "https://deckofcardsapi.com/static/img/AS.png"
+      "image": "images/A_spades.png"
     }
   ]
 }
