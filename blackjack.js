@@ -25,23 +25,23 @@ document.addEventListener("DOMContentLoaded", () => {
   let cards_player = 0;
   let cards_dealer = 2;
   // localStorage.setItem("wins", "0");
-  if (!localStorage.getItem("loses")) {
-    localStorage.setItem("loses", "0");
+  if (!sessionStorage.getItem("loses")) {
+    sessionStorage.setItem("loses", "0");
   }
-  if (!localStorage.getItem("wins")) {
-    localStorage.setItem("wins", "0");
+  if (!sessionStorage.getItem("wins")) {
+    sessionStorage.setItem("wins", "0");
   }
-  let loses = parseInt(localStorage.getItem("loses"));
-  let wins = parseInt(localStorage.getItem("wins"));
+  let loses = parseInt(sessionStorage.getItem("loses"));
+  let wins = parseInt(sessionStorage.getItem("wins"));
   const loses_text = document.createElement("p");
-  loses_text.innerText = "Loses: " + String(loses);
+  loses_text.innerText = "Today Loses: " + String(loses);
   loses_text.style.fontFamily = "'Times New Roman', Times, serif";
   loses_text.style.fontSize = 30 + "px";
   loses_text.style.position = "absolute";
   loses_text.style.left = "5%";
   loses_text.style.top = "0%";
   const wins_text = document.createElement("p");
-  wins_text.innerText = "Wins: " + String(wins);
+  wins_text.innerText = "Today Wins: " + String(wins);
   wins_text.style.fontFamily = "'Times New Roman', Times, serif";
   wins_text.style.fontSize = 30 + "px";
   wins_text.style.position = "absolute";
@@ -84,6 +84,9 @@ document.addEventListener("DOMContentLoaded", () => {
   stay.disabled = true;
   again.disabled = true;
   let blackjack = false;
+  let caseAceDealer = false;
+  let caseAcePlayer = false;
+  let aces11Involved = 0;
 
   // Load YouTube API only if it doesn't already exist
   if (!window.YT) {
@@ -172,7 +175,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (cards[randomj].value != "A") {
         value_player_cnt += parseInt(cards[randomj].value);
       } else {
+        caseAcePlayer = true;
+        // if (value_player_cnt + parseInt(cards[randomj].value11) > 21) {
+        //   value_player_cnt += parseInt(cards[randomj].value1);
+        // } else if (value_player_cnt + parseInt(cards[randomj].value11) > 17)
+        //   value_player_cnt += parseInt(cards[randomj].value11);
+        // else if (value_player_cnt + parseInt(cards[randomj].value11) == 17) {
+        //   value_player_cnt + parseInt(cards[randomj].value1);}
         value_player_cnt += parseInt(cards[randomj].value11);
+        aces11Involved += 1;
       }
       value_player.innerText = "Your value: " + String(value_player_cnt);
       cards.splice(randomj, 1);
@@ -183,7 +194,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (cards[randomi].value != "A") {
           value_dealer_cnt += parseInt(cards[randomi].value);
         } else {
-          value_dealer_cnt += parseInt(cards[randomi].value11);
+          value_dealer_cnt += parseFloat(cards[randomi].value11);
         }
         value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
         cards.splice(randomi, 1);
@@ -194,9 +205,21 @@ document.addEventListener("DOMContentLoaded", () => {
           if (cards[randomj].value != "A") {
             value_player_cnt += parseInt(cards[randomj].value);
           } else {
-            value_player_cnt += parseInt(cards[randomj].value11);
+            caseAcePlayer = true;
+            aces11Involved += 1;
+            if (value_player_cnt + parseInt(cards[randomj].value11) > 21)
+              value_player_cnt += parseInt(cards[randomj].value1);
+            else value_player_cnt += parseInt(cards[randomj].value11);
           }
-          value_player.innerText = "Your value: " + String(value_player_cnt);
+          if (!aces11Involved || value_player_cnt == 21)
+            value_player.innerText = "Your value: " + String(value_player_cnt);
+          else {
+            value_player.innerText =
+              "Your value:" +
+              String(value_player_cnt) +
+              "/" +
+              String(value_player_cnt - 10);
+          }
           cards.splice(randomj, 1);
 
           randomi = Math.floor(Math.random() * cards.length);
@@ -213,10 +236,10 @@ document.addEventListener("DOMContentLoaded", () => {
             hit.disabled = false;
             stay.disabled = false;
             if (value_player_cnt == 21) {
-              wins = parseInt(localStorage.getItem("wins"));
+              wins = parseInt(sessionStorage.getItem("wins"));
               wins += 1;
-              wins_text.innerText = "Wins: " + String(wins);
-              localStorage.setItem("wins", String(wins));
+              wins_text.innerText = "Today Wins: " + String(wins);
+              sessionStorage.setItem("wins", String(wins));
               blackjack = true;
               setTimeout(() => {
                 turnHiddenCard();
@@ -236,7 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
     deal_cards();
   });
   hit.addEventListener("click", () => {
-    ///pica cazul cand primseti 2 asi
     checkDeck();
     setTimeout(() => {
       if (value_player_cnt < 21) {
@@ -267,9 +289,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (cards[randomj].value != "A") {
           value_player_cnt += parseInt(cards[randomj].value);
+          if (!aces11Involved) {
+            value_player.innerText = "Your value: " + String(value_player_cnt);
+          } else {
+            if (value_player_cnt > 21) {
+              value_player_cnt -= 10;
+              aces11Involved--;
+              value_player.innerText =
+                "Your value: " + String(value_player_cnt);
+            } else {
+              value_player.innerText =
+                "Your value: " +
+                String(value_player_cnt) +
+                "/" +
+                String(value_player_cnt - 10);
+            }
+          }
         } else {
+          caseAcePlayer = true;
+          aces11Involved++;
           value_player_cnt += parseInt(cards[randomj].value11);
+          if (value_player_cnt > 21) {
+            aces11Involved--;
+            value_player_cnt -= 10;
+            if (!aces11Involved) {
+              value_player.innerText =
+                "Your value: " + String(value_player_cnt);
+            } else {
+              value_player.innerText =
+                "Your value: " +
+                String(value_player_cnt) +
+                "/" +
+                String(value_player_cnt - 10);
+            }
+          } else {
+            value_player_cnt += parseInt(cards[randomj].value11);
+            value_player.innerText =
+              "Your value: " +
+              String(value_player_cnt) +
+              "/" +
+              String(value_player_cnt - 10);
+          }
         }
+        console.log(aces11Involved + "cox");
         cards.splice(randomj, 1);
         if (value_player_cnt > 21) {
           busted = true;
@@ -282,10 +344,10 @@ document.addEventListener("DOMContentLoaded", () => {
           busted_text.style.top = "55%";
           busted_text.style.transform = "translate(-50%,-50%)";
           busted_text.style.color = "#8A0303";
-          loses = parseInt(localStorage.getItem("loses"));
+          loses = parseInt(sessionStorage.getItem("loses"));
           loses += 1;
-          loses_text.innerText = "Loses: " + String(loses);
-          localStorage.setItem("loses", String(loses));
+          loses_text.innerText = "Today Loses: " + String(loses);
+          sessionStorage.setItem("loses", String(loses));
           table.appendChild(busted_text);
           mockText.innerText = "HAHA";
           mockText.style.left = "67%";
@@ -296,6 +358,7 @@ document.addEventListener("DOMContentLoaded", () => {
             play_again();
           }, 2000);
         } else if (value_player_cnt == 21) {
+          ///
           ///incepe dealerHit
           stay.disabled = true;
           hit.disabled = true;
@@ -313,7 +376,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }, 700);
           turnHiddenCard();
         }
-        value_player.innerText = "Your value: " + String(value_player_cnt);
       }
     }, 300);
   });
@@ -371,6 +433,9 @@ document.addEventListener("DOMContentLoaded", () => {
     blackjack = false;
     hit.disabled = true;
     stay.disabled = true;
+    caseAceDealer = false;
+    caseAcePlayer = false;
+    aces11Involved = 0;
     mockText.innerText = "Still here?:)";
     dealer1.src = "";
     dealer2.src = "";
@@ -446,15 +511,15 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function checkWinner() {
     if (value_dealer_cnt < value_player_cnt || value_dealer_cnt > 21) {
-      wins = parseInt(localStorage.getItem("wins"));
+      wins = parseInt(sessionStorage.getItem("wins"));
       wins += 1;
-      wins_text.innerText = "Wins: " + String(wins);
-      localStorage.setItem("wins", String(wins));
+      wins_text.innerText = "Today Wins: " + String(wins);
+      sessionStorage.setItem("wins", String(wins));
     } else if (value_dealer_cnt > value_player_cnt) {
-      loses = parseInt(localStorage.getItem("loses"));
+      loses = parseInt(sessionStorage.getItem("loses"));
       loses += 1;
-      loses_text.innerText = "Loses: " + String(loses);
-      localStorage.setItem("loses", String(loses));
+      loses_text.innerText = "Today Loses: " + String(loses);
+      sessionStorage.setItem("loses", String(loses));
     }
   }
 });
