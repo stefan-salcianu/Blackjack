@@ -260,3 +260,6 @@ img[src=""] {
 #pg_button:active {
   background-color: darkgoldenrod;
 }
+#playMusic:hover {
+  cursor: pointer;
+}
