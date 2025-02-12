@@ -260,6 +260,29 @@ img[src=""] {
 #pg_button:active {
   background-color: darkgoldenrod;
 }
+#playMusic {
+  background-color: rgb(144, 229, 200);
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  border-width: 5px;
+  border-radius: 50%;
+  right: 0%;
+  top: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 #playMusic:hover {
   cursor: pointer;
+}
+#playMusic:active {
+  background-color: rgb(77, 152, 127);
+  cursor: unset;
+}
+button img {
+  width: 30px;
+}
+.hidden {
+  display: none;
 }
