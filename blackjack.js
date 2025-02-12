@@ -86,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let blackjack = false;
   let caseAceDealer = false;
   let caseAcePlayer = false;
+  let allowSpace = false;
   let aces11Involved = 0;
 
   // Load YouTube API only if it doesn't already exist
@@ -167,6 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function deal_cards() {
     deal.disabled = true;
     hit.disabled = true;
+    allowSpace = false;
     stay.disabled = true;
     randomj = Math.floor(Math.random() * cards.length);
     checkDeck();
@@ -207,9 +209,10 @@ document.addEventListener("DOMContentLoaded", () => {
           } else {
             caseAcePlayer = true;
             aces11Involved += 1;
-            if (value_player_cnt + parseInt(cards[randomj].value11) > 21)
+            if (value_player_cnt + parseInt(cards[randomj].value11) > 21) {
               value_player_cnt += parseInt(cards[randomj].value1);
-            else value_player_cnt += parseInt(cards[randomj].value11);
+              aces11Involved--;
+            } else value_player_cnt += parseInt(cards[randomj].value11);
           }
           if (!aces11Involved || value_player_cnt == 21)
             value_player.innerText = "Your value: " + String(value_player_cnt);
@@ -235,6 +238,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cards.splice(randomi, 1);
             hit.disabled = false;
             stay.disabled = false;
+            allowSpace = true;
             if (value_player_cnt == 21) {
               wins = parseInt(sessionStorage.getItem("wins"));
               wins += 1;
@@ -246,13 +250,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 ///implement BLACKJACK animation
                 setTimeout(() => {
                   play_again();
-                }, 2300);
+                }, 2000);
               }, 700);
             }
-          }, 300);
-        }, 300);
-      }, 300);
-    }, 300);
+          }, 150);
+        }, 150);
+      }, 150);
+    }, 150);
   }
   deal.addEventListener("click", () => {
     console.log("deal");
@@ -353,6 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
           mockText.style.left = "67%";
           stay.disabled = true;
           hit.disabled = true;
+          allowSpace = false;
           setTimeout(() => {
             if (busted == true) table.removeChild(busted_text);
             play_again();
@@ -362,6 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
           ///incepe dealerHit
           stay.disabled = true;
           hit.disabled = true;
+          allowSpace = false;
           setTimeout(() => {
             if (value_dealer_cnt < 17) {
               dealer2.style.left = "39%";
@@ -371,7 +377,7 @@ document.addEventListener("DOMContentLoaded", () => {
               dealerHit(cards_dealer);
               setTimeout(() => {
                 play_again();
-              }, 2000);
+              }, 3000);
             }, 700);
           }, 700);
           turnHiddenCard();
@@ -390,10 +396,11 @@ document.addEventListener("DOMContentLoaded", () => {
         dealerHit(cards_dealer);
         setTimeout(() => {
           play_again();
-        }, 2000);
+        }, 3000);
       }, 700);
     }, 700);
     hit.disabled = true;
+    allowSpace = false;
     turnHiddenCard();
   });
   function checkDeck() {
@@ -401,6 +408,7 @@ document.addEventListener("DOMContentLoaded", () => {
       stay.disabled = true;
       deal.disabled = true;
       hit.disabled = true;
+      allowSpace = false;
       cards = [...copy_cards];
       setTimeout(() => {
         table.removeChild(change_text);
@@ -408,6 +416,7 @@ document.addEventListener("DOMContentLoaded", () => {
         stay.disabled = false;
         deal.disabled = false;
         hit.disabled = false;
+        allowSpace = true;
       }, 3000); // Reupdates deck after 0.3 seconds
       const change_text = document.createElement("p");
       change_text.innerText = "DECK CHANGED";
@@ -420,6 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
       change_text.style.color = "#8A0303";
       table.appendChild(change_text);
       hit.disabled = true;
+      allowSpace = false;
       stay.disabled = true;
     }
   }
@@ -432,6 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
     game_over = false;
     blackjack = false;
     hit.disabled = true;
+    allowSpace = false;
     stay.disabled = true;
     caseAceDealer = false;
     caseAcePlayer = false;
@@ -462,6 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function turnHiddenCard() {
     busted = false;
     hit.disabled = true;
+    allowSpace = false;
     stay.disabled = true;
     dealer2.style.transformOrigin = "center center";
     dealer2.style.transition =
@@ -507,7 +519,7 @@ document.addEventListener("DOMContentLoaded", () => {
     value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
     setTimeout(() => {
       dealerHit(cards_dealer);
-    }, 700);
+    }, 500);
   }
   function checkWinner() {
     if (value_dealer_cnt < value_player_cnt || value_dealer_cnt > 21) {
@@ -522,4 +534,132 @@ document.addEventListener("DOMContentLoaded", () => {
       sessionStorage.setItem("loses", String(loses));
     }
   }
+  ///space for hit
+  window.addEventListener("keydown", (e) => {
+    if (e.key == " " && allowSpace == true) {
+      checkDeck();
+      setTimeout(() => {
+        if (value_player_cnt < 21) {
+          cards_player += 1;
+          randomj = Math.floor(Math.random() * cards.length);
+          switch (cards_player) {
+            case 1:
+              hit1.src = cards[randomj].image;
+              break;
+            case 2:
+              hit2.src = cards[randomj].image;
+              break;
+            case 3:
+              hit3.src = cards[randomj].image;
+              break;
+            case 4:
+              hit4.src = cards[randomj].image;
+              break;
+            case 5:
+              hit5.src = cards[randomj].image;
+              break;
+            case 6:
+              hit6.src = cards[randomj].image;
+              break;
+            default:
+              break;
+          }
+
+          if (cards[randomj].value != "A") {
+            value_player_cnt += parseInt(cards[randomj].value);
+            if (!aces11Involved) {
+              value_player.innerText =
+                "Your value: " + String(value_player_cnt);
+            } else {
+              if (value_player_cnt > 21) {
+                value_player_cnt -= 10;
+                aces11Involved--;
+                value_player.innerText =
+                  "Your value: " + String(value_player_cnt);
+              } else {
+                value_player.innerText =
+                  "Your value: " +
+                  String(value_player_cnt) +
+                  "/" +
+                  String(value_player_cnt - 10);
+              }
+            }
+          } else {
+            caseAcePlayer = true;
+            aces11Involved++;
+            value_player_cnt += parseInt(cards[randomj].value11);
+            if (value_player_cnt > 21) {
+              aces11Involved--;
+              value_player_cnt -= 10;
+              if (!aces11Involved) {
+                value_player.innerText =
+                  "Your value: " + String(value_player_cnt);
+              } else {
+                value_player.innerText =
+                  "Your value: " +
+                  String(value_player_cnt) +
+                  "/" +
+                  String(value_player_cnt - 10);
+              }
+            } else {
+              value_player_cnt += parseInt(cards[randomj].value11);
+              value_player.innerText =
+                "Your value: " +
+                String(value_player_cnt) +
+                "/" +
+                String(value_player_cnt - 10);
+            }
+          }
+          console.log(aces11Involved + "cox");
+          cards.splice(randomj, 1);
+          if (value_player_cnt > 21) {
+            busted = true;
+            const busted_text = document.createElement("p");
+            busted_text.innerText = "YOU BUSTED";
+            busted_text.style.fontFamily = "'Times New Roman', Times, serif";
+            busted_text.style.fontSize = 40 + "px";
+            busted_text.style.position = "absolute";
+            busted_text.style.left = "50%";
+            busted_text.style.top = "55%";
+            busted_text.style.transform = "translate(-50%,-50%)";
+            busted_text.style.color = "#8A0303";
+            loses = parseInt(sessionStorage.getItem("loses"));
+            loses += 1;
+            loses_text.innerText = "Today Loses: " + String(loses);
+            sessionStorage.setItem("loses", String(loses));
+            table.appendChild(busted_text);
+            mockText.innerText = "HAHA";
+            mockText.style.left = "67%";
+            stay.disabled = true;
+            hit.disabled = true;
+            allowSpace = false;
+
+            setTimeout(() => {
+              if (busted == true) table.removeChild(busted_text);
+              play_again();
+            }, 2000);
+          } else if (value_player_cnt == 21) {
+            ///
+            ///incepe dealerHit
+            stay.disabled = true;
+            hit.disabled = true;
+            allowSpace = false;
+            setTimeout(() => {
+              if (value_dealer_cnt < 17) {
+                dealer2.style.left = "39%";
+                dealer1.style.left = "28%";
+              }
+              setTimeout(() => {
+                dealerHit(cards_dealer);
+                setTimeout(() => {
+                  play_again();
+                }, 3000);
+              }, 700);
+            }, 700);
+            turnHiddenCard();
+          }
+        }
+      }, 300);
+    } else return;
+  });
 });
