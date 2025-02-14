@@ -186,9 +186,9 @@ img[src=""] {
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 49%;
-  top: 85%;
-  transform: translate(-50%, -50%);
+  right: 2%;
+  top: 35%;
+  /* transform: translate(-50%, -50%); */
 }
 #player_card1 {
   height: 120px;

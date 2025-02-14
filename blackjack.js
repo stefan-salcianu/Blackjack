@@ -216,7 +216,27 @@ document.addEventListener("DOMContentLoaded", () => {
         randomj = Math.floor(Math.random() * cards.length);
         checkDeck();
         setTimeout(() => {
-          player0.src = cards[randomj].image;
+          let player0_img = cards[randomj].image;
+          anime({
+            targets: "#player_card0",
+            translateX: -443,
+            translateY: 217,
+            rotateY: { value: 90, duration: 100 },
+            scaleX: 0.8,
+            easing: "easeInOutQuad",
+            complete: function () {
+              // Change the image src at the midpoint of the flip
+              document.getElementById("player_card0").src = player0_img;
+
+              // Animate the second half of the flip
+              anime({
+                targets: "#player_card0",
+                rotateY: { value: 0, duration: 100 }, // Finish flip
+                scaleX: 1,
+                easing: "easeInOutQuad",
+              });
+            },
+          });
           if (cards[randomj].value != "A") {
             value_player_cnt += parseInt(cards[randomj].value);
           } else {
@@ -536,7 +556,11 @@ document.addEventListener("DOMContentLoaded", () => {
     dealer5.src = "";
     dealer6.src = "";
     player.src = "";
-    player0.src = "";
+    player0.src = "images/back_card.png";
+    anime.set("#player_card0", {
+      translateX: 0,
+      translateY: 0,
+    });
     hit1.src = "";
     hit2.src = "";
     hit3.src = "";

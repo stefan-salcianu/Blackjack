@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="blackjack.css" />
-    <script src="blackjack.js" defer></script>
+    <!-- <script src="blackjack.js" defer></script> -->
     <title>BlackJack_SalcianuStefan</title>
   </head>
   <body style="background-color: rgb(50, 60, 73)">
@@ -18,7 +18,7 @@
       <img id="dealer_card7" src="" alt="" />
       <img id="dealer_card8" src="" alt="" />
       <img id="player_card" src="" alt="" />
-      <img id="player_card0" src="" alt="" />
+      <img id="player_card0" src="images/back_card.png" alt="" />
       <img id="player_card1" src="" alt="" />
       <img id="player_card2" src="" alt="" />
       <img id="player_card3" src="" alt="" />
@@ -43,5 +43,13 @@
         />
       </button>
     </div>
+    <!-- Load Anime.js from the CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- Load your script AFTER the CDN -->
+    <script src="blackjack.js"></script>
+    <div
+      id="box"
+      style="height: 100px; width: 100px; background-color: black"
+    ></div>
   </body>
 </html>
