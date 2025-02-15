@@ -93,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let caseAcePlayer = false;
   let allowSpace = false;
   musicButton.disabled = true;
+  let dealerDone = false;
 
   ///music section
   // Load YouTube API only if it doesn't already exist
@@ -488,9 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       setTimeout(() => {
         dealerHit(cards_dealer);
-        setTimeout(() => {
-          play_again();
-        }, 3000);
+        checkDealerDone();
       }, 700);
     }, 700);
     hit.disabled = true;
@@ -498,6 +497,16 @@ document.addEventListener("DOMContentLoaded", () => {
     turnHiddenCard();
   });
   ///stay event
+  function checkDealerDone() {
+    if (dealerDone == false) {
+      setTimeout(() => {
+        checkDealerDone();
+      }, 100);
+    } else
+      setTimeout(() => {
+        play_again();
+      }, 1000);
+  }
 
   ///checking if deck needs changed
   function checkDeck() {
@@ -573,6 +582,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dealer1.style.left = "44%";
     dealer2.style.left = "56%";
     cards_dealer = 2;
+    dealerDone = false;
     deal_cards();
   }
   ///play again
@@ -610,6 +620,7 @@ document.addEventListener("DOMContentLoaded", () => {
       (aces11Involved_dealer == 0 || value_dealer_cnt != 17)
       ///ensures dealerHit doesn t stop on soft 17
     ) {
+      dealerDone = true;
       if (value_dealer_cnt == 21)
         value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
       checkWinner();
@@ -689,7 +700,7 @@ document.addEventListener("DOMContentLoaded", () => {
     value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
     setTimeout(() => {
       dealerHit(cards_dealer);
-    }, 500);
+    }, 1000);
   }
   ///dealer action
 
