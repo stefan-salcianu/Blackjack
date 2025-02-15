@@ -299,7 +299,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 wins += 1;
                 wins_text.innerText = "Today Wins: " + String(wins);
                 sessionStorage.setItem("wins", String(wins));
-              } else {
+              } else if (
+                value_dealer_cnt + hidden_card_value ==
+                value_player_cnt
+              ) {
                 const push_text = document.createElement("p");
                 push_text.innerText = "PUSH";
                 push_text.style.fontFamily = "'Times New Roman', Times, serif";
@@ -310,15 +313,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 push_text.style.transform = "translate(-50%,-50%)";
                 push_text.style.color = "#8A0303";
                 table.appendChild(push_text);
+              } else {
+                loses = parseInt(sessionStorage.getItem("loses"));
+                loses += 1;
+                loses_text.innerText = "Today Loses: " + String(loses);
               }
               value_dealer.innerText =
                 "Dealer value: " + String(value_dealer_cnt);
               setTimeout(() => {
                 turnHiddenCard();
                 ///implement BLACKJACK animation
-                setTimeout(() => {
-                  play_again();
-                }, 3000);
+                checkDealerDone();
               }, 700);
             }
             ///stay.click(); automode(not quite)
