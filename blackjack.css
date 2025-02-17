@@ -2,7 +2,7 @@
   --grey-tone: silver;
   --golden-tone: rgb(196, 204, 109);
 }
-.table {
+#table {
   padding-top: 20px;
   height: 70vh;
   width: 70vw;
@@ -16,14 +16,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
-.table_context {
-  height: 100vh;
-  width: 100vw;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
+
 #dealer_card1 {
   height: 120px;
   width: 100px;
@@ -189,6 +182,8 @@ img[src=""] {
   right: 2%;
   top: 35%;
   /* transform: translate(-50%, -50%); */
+  backface-visibility: hidden;
+  transform-origin: center;
 }
 #player_card1 {
   height: 120px;

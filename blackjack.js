@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const dealer2 = document.getElementById("dealer_card2");
   const player = document.getElementById("player_card");
   const player0 = document.getElementById("player_card0");
-  const table = document.querySelector(".table");
+  const table = document.getElementById("table");
   const hit1 = document.getElementById("player_card1");
   const hit2 = document.getElementById("player_card2");
   const hit3 = document.getElementById("player_card3");
@@ -218,26 +218,37 @@ document.addEventListener("DOMContentLoaded", () => {
         checkDeck();
         setTimeout(() => {
           let player0_img = cards[randomj].image;
+
+          // Calculate left & top dynamically as percentages
+
+          let tableWidth = table.getBoundingClientRect().width;
+          let tableHeight = table.getBoundingClientRect().height;
+          let player0Width = player0.getBoundingClientRect().width;
+          let player0Height = player0.getBoundingClientRect().height;
+
+          let leftPercentage =
+            ((0.49 * tableWidth - 0.5 * player0Width) / tableWidth) * 100;
+          let topPercentage = 0.85 * 100 - (player0Height / tableHeight) * 50;
+
           anime({
             targets: "#player_card0",
-            translateX: -443,
-            translateY: 217,
+            left: topPercentage + "%", // Dynamic left positioning
+            top: leftPercentage + "%", // Dynamic top positioning
             rotateY: { value: 90, duration: 100 },
             scaleX: 0.8,
             easing: "easeInOutQuad",
             complete: function () {
-              // Change the image src at the midpoint of the flip
               document.getElementById("player_card0").src = player0_img;
 
-              // Animate the second half of the flip
               anime({
                 targets: "#player_card0",
-                rotateY: { value: 0, duration: 100 }, // Finish flip
+                rotateY: { value: 0, duration: 100 },
                 scaleX: 1,
                 easing: "easeInOutQuad",
               });
             },
           });
+
           if (cards[randomj].value != "A") {
             value_player_cnt += parseInt(cards[randomj].value);
           } else {
@@ -323,6 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
               setTimeout(() => {
                 turnHiddenCard();
                 ///implement BLACKJACK animation
+                dealerDone = true;
                 checkDealerDone();
               }, 700);
             }
@@ -507,10 +519,16 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         checkDealerDone();
       }, 100);
-    } else
-      setTimeout(() => {
-        play_again();
-      }, 1000);
+    } else {
+      if (blackjack)
+        setTimeout(() => {
+          play_again();
+        }, 3000);
+      else
+        setTimeout(() => {
+          play_again();
+        }, 1000);
+    }
   }
 
   ///checking if deck needs changed
@@ -600,7 +618,7 @@ document.addEventListener("DOMContentLoaded", () => {
     allowSpace = false;
     stay.disabled = true;
     value_dealer_cnt += hidden_card_value;
-    if (caseAceDealer && !blackjack)
+    if (caseAceDealer && !blackjack && value_dealer_cnt < 18)
       value_dealer.innerText =
         "Dealer value: " +
         String(value_dealer_cnt) +
@@ -678,7 +696,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (value_dealer_cnt > 21) {
         aces11Involved_dealer--;
         value_dealer_cnt -= 10;
-        if (!aces11Involved_dealer) {
+        if (aces11Involved_dealer == 0) {
           value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
         } else {
           value_dealer.innerText =
@@ -702,7 +720,8 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Final Display:", value_dealer.innerText);
     }
     cards.splice(randomj, 1);
-    value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
+    if (value_dealer_cnt > 17)
+      value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
     setTimeout(() => {
       dealerHit(cards_dealer);
     }, 1000);
