@@ -242,14 +242,14 @@ img[src=""] {
 #pg_button {
   position: absolute;
   height: 80px;
-  width: 170px;
+  width: 85px;
   border-radius: 10px;
   background-color: gold;
   color: rgb(216, 0, 227);
   font-size: 25px;
   font-family: "Times New Roman", Times, serif;
   border: solid;
-  left: 72%;
+  left: 79%;
   top: 65%;
 }
 #pg_button:active {
@@ -280,4 +280,84 @@ button img {
 }
 .hidden {
   display: none;
+}
+#box {
+  height: 50px;
+  width: 50px;
+  background-color: silver;
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: dotted;
+  border-color: gold;
+}
+#box img {
+  height: 45px;
+  width: 45px;
+  position: relative;
+}
+@keyframes blinkingGlow {
+  0% {
+    text-shadow: 0 0 5px #00f, 0 0 10px #00f;
+    opacity: 1;
+  }
+  33% {
+    text-shadow: 0 0 20px #00f, 0 0 30px #00f;
+    opacity: 0.8;
+  }
+  67% {
+    text-shadow: 0 0 5px #00f, 0 0 10px #00f;
+    opacity: 1;
+  }
+  100% {
+    text-shadow: 0 0 5px #00f, 0 0 10px #00f;
+    opacity: 0.8;
+  }
+}
+
+#box p {
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  animation: blinkingGlow 1s infinite alternate;
+  color: #00f;
+}
+#B,
+#L,
+#A,
+#C,
+#K,
+#J,
+#A2,
+#C2,
+#K2 {
+  position: absolute;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  left: 25%;
+  top: 59%;
+  opacity: 0;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#B img,
+#L img,
+#A img,
+#C img,
+#K img,
+#J img,
+#A2 img,
+#C2 img,
+#K2 img {
+  height: 60px;
+  width: 60px;
 }

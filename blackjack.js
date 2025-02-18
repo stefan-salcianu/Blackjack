@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicButton = document.getElementById("playMusic");
   const pauseImg = document.getElementById("pause");
   const playImg = document.getElementById("play");
+
+  let bjAnimation = false;
   let hidden_card;
   let hidden_card_value;
   let value_player_cnt = 0;
@@ -29,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let cards_dealer = 2;
   let aces11Involved = 0;
   let aces11Involved_dealer = 0;
+
   ///score initialization
   if (!sessionStorage.getItem("loses")) {
     sessionStorage.setItem("loses", "0");
@@ -36,8 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!sessionStorage.getItem("wins")) {
     sessionStorage.setItem("wins", "0");
   }
+  if (!sessionStorage.getItem("blackjacks")) {
+    sessionStorage.setItem("blackjacks", "0");
+  }
   let loses = parseInt(sessionStorage.getItem("loses"));
   let wins = parseInt(sessionStorage.getItem("wins"));
+  let blackjack_cnt = parseInt(sessionStorage.getItem("blackjacks"));
+  const blackjack_text = document.getElementById("blackjackText");
+  blackjack_text.innerText = String(blackjack_cnt);
   const loses_text = document.createElement("p");
   loses_text.innerText = "Today Loses: " + String(loses);
   loses_text.style.fontFamily = "'Times New Roman', Times, serif";
@@ -177,6 +186,20 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => console.error("Failed to fetch responses:", error));
 
+  const animationSound = new Audio("audio/cool_blackjack.wav");
+
+  // Function to start the sound
+  function playSound() {
+    animationSound.currentTime = 0; // Reset sound
+    animationSound
+      .play()
+      .catch((error) => console.error("Audio play failed:", error)); // Handle autoplay issues
+  }
+
+  // Function to stop the sound
+  function stopSound() {
+    animationSound.pause();
+  }
   ///deal function
   function deal_cards() {
     deal.disabled = true;
@@ -229,11 +252,12 @@ document.addEventListener("DOMContentLoaded", () => {
           let leftPercentage =
             ((0.49 * tableWidth - 0.5 * player0Width) / tableWidth) * 100;
           let topPercentage = 0.85 * 100 - (player0Height / tableHeight) * 50;
+          player0.style.transform = "translate(-50%,-50%)";
 
           anime({
             targets: "#player_card0",
-            left: topPercentage + "%", // Dynamic left positioning
-            top: leftPercentage + "%", // Dynamic top positioning
+            left: 49 + "%", // Dynamic left positioning
+            top: 85 + "%", // Dynamic top positioning
             rotateY: { value: 90, duration: 100 },
             scaleX: 0.8,
             easing: "easeInOutQuad",
@@ -301,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 hidden_card_value != 11) ///hidden blackjack
             ) {
               blackjack = true;
-              alert(value_dealer_cnt + hidden_card_value);
+              // alert(value_dealer_cnt + hidden_card_value);
               if (
                 value_player_cnt == 21 &&
                 value_dealer_cnt + hidden_card_value != 21
@@ -310,6 +334,121 @@ document.addEventListener("DOMContentLoaded", () => {
                 wins += 1;
                 wins_text.innerText = "Today Wins: " + String(wins);
                 sessionStorage.setItem("wins", String(wins));
+                blackjack_cnt = parseInt(sessionStorage.getItem("blackjacks"));
+                blackjack_cnt += 1;
+                blackjack_text.innerText = String(blackjack_cnt);
+                sessionStorage.setItem("blackjacks", String(blackjack_cnt));
+                bjAnimation = true;
+                ///implement BLACKJACK animation
+                anime({
+                  targets: "#box",
+                  left: {
+                    value: "25%",
+                    duration: 1000,
+                  },
+                  top: {
+                    value: "58%",
+                    duration: 1000,
+                  },
+                  rotate: {
+                    value: 4680,
+                    duration: 2000,
+                    easing: "easeInOutSine",
+                  },
+                  scale: {
+                    value: 2,
+                    duration: 1500,
+                    delay: 800,
+                    easing: "easeInOutQuart",
+                  },
+                  begin: function () {
+                    playSound();
+                    document.querySelector("#box p").style.opacity = "0";
+                    // 👈 Hide <p> when animation starts
+                    document.querySelector("#box p").style.animation = "none";
+                  },
+                  complete: function () {
+                    anime({
+                      targets: "#box p",
+                      animation: {
+                        value: "blinkingGlow 1s infinite alternate",
+                      },
+                      scale: [
+                        { value: 3, duration: 300 },
+                        { value: 1, duration: 300, delay: 500 },
+                      ],
+                      easing: "easeOutQuad",
+                      complete: function () {
+                        anime({
+                          targets: [
+                            "#B",
+                            "#L",
+                            "#A",
+                            "#C",
+                            "#K",
+                            "#J",
+                            "#A2",
+                            "#C2",
+                            "#K2",
+                          ],
+                          opacity: 1,
+                          left: (el, i) => `${32 + i * 4}%`,
+                          duration: 500,
+                          easing: "easeOutQuad",
+                          delay: (el, i) => i * 150,
+                          rotate: [
+                            { value: 45, duration: 400, easing: "easeOutQuad" },
+                            {
+                              value: -15,
+                              duration: 300,
+                              delay: 300,
+                              easing: "easeInOutQuad",
+                            },
+                            { value: 10, duration: 250, easing: "easeOutSine" },
+                            {
+                              value: 0,
+                              duration: 350,
+                              easing: "easeOutBounce",
+                            },
+                          ],
+                          direction: "alternate", // Makes it reverse
+                          complete: function () {
+                            anime({
+                              targets: "#box",
+                              scale: {
+                                value: 1,
+                                duration: 1000,
+
+                                easing: "easeInOutQuad",
+                              },
+                              left: {
+                                value: "0%",
+                                duration: 1500,
+                                easing: "easeInOutQuad",
+                              },
+                              top: {
+                                value: "0%",
+                                duration: 1500,
+                                easing: "easeInOutQuad",
+                              },
+                              rotate: {
+                                value: 0,
+                                duration: 2000,
+                                easing: "easeInOutQuad",
+                              },
+                              complete: function () {
+                                setTimeout(() => {
+                                  play_again();
+                                  stopSound();
+                                }, 1000);
+                              },
+                            });
+                          },
+                        });
+                      },
+                    });
+                  },
+                });
               } else if (
                 value_dealer_cnt + hidden_card_value ==
                 value_player_cnt
@@ -333,9 +472,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Dealer value: " + String(value_dealer_cnt);
               setTimeout(() => {
                 turnHiddenCard();
-                ///implement BLACKJACK animation
-                dealerDone = true;
-                checkDealerDone();
+                if (bjAnimation == false) {
+                  dealerDone = true;
+                  checkDone();
+                }
               }, 700);
             }
             ///stay.click(); automode(not quite)
@@ -497,6 +637,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ///stay event
   stay.addEventListener("click", () => {
+    hit.disabled = true;
+    allowSpace = false;
     value_player.innerText = "Your value: " + String(value_player_cnt);
     stay.disabled = true;
     setTimeout(() => {
@@ -506,28 +648,23 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       setTimeout(() => {
         dealerHit(cards_dealer);
-        checkDealerDone();
+
+        checkDone();
       }, 700);
     }, 700);
-    hit.disabled = true;
-    allowSpace = false;
+
     turnHiddenCard();
   });
   ///stay event
-  function checkDealerDone() {
+  function checkDone() {
     if (dealerDone == false) {
       setTimeout(() => {
-        checkDealerDone();
+        checkDone();
       }, 100);
     } else {
-      if (blackjack)
-        setTimeout(() => {
-          play_again();
-        }, 3000);
-      else
-        setTimeout(() => {
-          play_again();
-        }, 1000);
+      setTimeout(() => {
+        play_again();
+      }, 3000);
     }
   }
 
@@ -589,10 +726,10 @@ document.addEventListener("DOMContentLoaded", () => {
     dealer6.src = "";
     player.src = "";
     player0.src = "images/back_card.png";
-    anime.set("#player_card0", {
-      translateX: 0,
-      translateY: 0,
-    });
+    player0.style.right = "2%"; // Ensure it's correctly positioned
+    player0.style.top = "35%"; // Reset top position
+    player0.style.left = "auto"; // Reset left if it was changed
+    player0.style.transform = "translate(0, 0)";
     hit1.src = "";
     hit2.src = "";
     hit3.src = "";
@@ -606,6 +743,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dealer2.style.left = "56%";
     cards_dealer = 2;
     dealerDone = false;
+    bjAnimation = false;
     deal_cards();
   }
   ///play again
@@ -646,6 +784,7 @@ document.addEventListener("DOMContentLoaded", () => {
       dealerDone = true;
       if (value_dealer_cnt == 21)
         value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
+
       checkWinner();
       return;
     }
