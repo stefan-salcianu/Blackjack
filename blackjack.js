@@ -186,12 +186,19 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch((error) => console.error("Failed to fetch responses:", error));
 
-  const animationSound = new Audio("audio/cool_blackjack.wav");
+  const animationSound = new Audio("audio/rock_sound.wav");
+  const shotSound = new Audio("audio/shot.wav");
 
   // Function to start the sound
   function playSound() {
-    animationSound.currentTime = 0; // Reset sound
+    animationSound.currentTime = 0;
     animationSound
+      .play()
+      .catch((error) => console.error("Audio play failed:", error)); // Handle autoplay issues
+  }
+  function playShotSound() {
+    shotSound.currentTime = 0;
+    shotSound
       .play()
       .catch((error) => console.error("Audio play failed:", error)); // Handle autoplay issues
   }
@@ -396,6 +403,13 @@ document.addEventListener("DOMContentLoaded", () => {
                           duration: 500,
                           easing: "easeOutQuad",
                           delay: (el, i) => i * 150,
+                          begin: function (anim) {
+                            anim.animatables.forEach((item, i) => {
+                              setTimeout(() => {
+                                playShotSound();
+                              }, i * 150); // 🔥 Sync sound with delay of each letter
+                            });
+                          },
                           rotate: [
                             { value: 45, duration: 400, easing: "easeOutQuad" },
                             {
