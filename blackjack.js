@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicButton = document.getElementById("playMusic");
   const pauseImg = document.getElementById("pause");
   const playImg = document.getElementById("play");
-
   let bjAnimation = false;
   let hidden_card;
   let hidden_card_value;
@@ -213,10 +212,39 @@ document.addEventListener("DOMContentLoaded", () => {
     hit.disabled = true;
     allowSpace = false;
     stay.disabled = true;
+    player0.style.left = "90%";
+    player0.style.top = "40%";
+    player0.style.transform = "none";
+    player.style.left = "90%";
+    player.style.top = "40%";
+    player.style.transform = "none";
+    dealer1.style.left = "90%";
+    dealer1.style.top = "40%";
+    dealer1.style.transform = "none";
     randomj = Math.floor(Math.random() * cards.length);
     checkDeck();
     setTimeout(() => {
-      player.src = cards[randomj].image;
+      let player_img = cards[randomj].image;
+      player.src = "images/back_card.png";
+      player.style.transform = "translate(-50%,-50%)";
+      anime({
+        targets: "#player_card",
+        top: "85%",
+        left: "47%",
+        rotateY: { value: 45, duration: 50 }, // First rotate halfway
+        easing: "easeInOutQuad",
+        duration: 500,
+        complete: function () {
+          document.getElementById("player_card").src = player_img; // Change image mid-turn
+
+          anime({
+            targets: "#player_card",
+            rotateY: { value: 0, duration: 50 }, // Rotate back smoothly
+            easing: "easeInOutQuad",
+          });
+        },
+      });
+
       if (cards[randomj].value != "A") {
         value_player_cnt += parseInt(cards[randomj].value);
       } else {
@@ -229,7 +257,26 @@ document.addEventListener("DOMContentLoaded", () => {
       randomi = Math.floor(Math.random() * cards.length);
       checkDeck();
       setTimeout(() => {
-        dealer1.src = cards[randomi].image;
+        let dealer1_img = cards[randomi].image;
+        dealer1.src = "images/back_card.png";
+        dealer1.style.transform = "translate(-50%,-50%)";
+        anime({
+          targets: "#dealer_card1",
+          top: "45%",
+          left: "44%",
+          rotateY: { value: 45, duration: 50 }, // First rotate halfway
+          easing: "easeInOutQuad",
+          duration: 500,
+          complete: function () {
+            document.getElementById("dealer_card1").src = dealer1_img; // Change image mid-turn
+
+            anime({
+              targets: "#dealer_card1",
+              rotateY: { value: 0, duration: 50 }, // Rotate back smoothly
+              easing: "easeInOutQuad",
+            });
+          },
+        });
         if (cards[randomi].value != "A") {
           value_dealer_cnt += parseInt(cards[randomi].value);
           value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
@@ -246,35 +293,24 @@ document.addEventListener("DOMContentLoaded", () => {
         cards.splice(randomi, 1);
         randomj = Math.floor(Math.random() * cards.length);
         checkDeck();
+
         setTimeout(() => {
           let player0_img = cards[randomj].image;
-
-          // Calculate left & top dynamically as percentages
-
-          let tableWidth = table.getBoundingClientRect().width;
-          let tableHeight = table.getBoundingClientRect().height;
-          let player0Width = player0.getBoundingClientRect().width;
-          let player0Height = player0.getBoundingClientRect().height;
-
-          let leftPercentage =
-            ((0.49 * tableWidth - 0.5 * player0Width) / tableWidth) * 100;
-          let topPercentage = 0.85 * 100 - (player0Height / tableHeight) * 50;
+          player0.src = "images/back_card.png";
           player0.style.transform = "translate(-50%,-50%)";
-
           anime({
             targets: "#player_card0",
-            left: 49 + "%", // Dynamic left positioning
-            top: 85 + "%", // Dynamic top positioning
-            rotateY: { value: 90, duration: 100 },
-            scaleX: 0.8,
+            top: "85%",
+            left: "49%",
+            rotateY: { value: 45, duration: 50 }, // First rotate halfway
             easing: "easeInOutQuad",
+            duration: 500,
             complete: function () {
-              document.getElementById("player_card0").src = player0_img;
+              document.getElementById("player_card0").src = player0_img; // Change image mid-turn
 
               anime({
                 targets: "#player_card0",
-                rotateY: { value: 0, duration: 100 },
-                scaleX: 1,
+                rotateY: { value: 0, duration: 50 }, // Rotate back smoothly
                 easing: "easeInOutQuad",
               });
             },
@@ -411,14 +447,22 @@ document.addEventListener("DOMContentLoaded", () => {
                             });
                           },
                           rotate: [
-                            { value: 45, duration: 400, easing: "easeOutQuad" },
+                            {
+                              value: 45,
+                              duration: 400,
+                              easing: "easeOutQuad",
+                            },
                             {
                               value: -15,
                               duration: 300,
                               delay: 300,
                               easing: "easeInOutQuad",
                             },
-                            { value: 10, duration: 250, easing: "easeOutSine" },
+                            {
+                              value: 10,
+                              duration: 250,
+                              easing: "easeOutSine",
+                            },
                             {
                               value: 0,
                               duration: 350,
@@ -656,16 +700,10 @@ document.addEventListener("DOMContentLoaded", () => {
     value_player.innerText = "Your value: " + String(value_player_cnt);
     stay.disabled = true;
     setTimeout(() => {
-      if (value_dealer_cnt < 17 || (value_dealer_cnt == 17 && caseAceDealer)) {
-        dealer2.style.left = "39%";
-        dealer1.style.left = "28%";
-      }
-      setTimeout(() => {
-        dealerHit(cards_dealer);
+      dealerHit(cards_dealer);
 
-        checkDone();
-      }, 700);
-    }, 700);
+      checkDone();
+    }, 1400);
 
     turnHiddenCard();
   });
@@ -685,6 +723,10 @@ document.addEventListener("DOMContentLoaded", () => {
   ///checking if deck needs changed
   function checkDeck() {
     if (cards.length == 0) {
+      stayInitial = stay.disabled;
+      hitInitial = hit.disabled;
+      dealInitial = deal.disabled;
+      allowSpaceInitial = allowSpace;
       stay.disabled = true;
       deal.disabled = true;
       hit.disabled = true;
@@ -693,10 +735,11 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(() => {
         table.removeChild(change_text);
         console.log(copy_cards);
-        stay.disabled = false;
-        deal.disabled = false;
-        hit.disabled = false;
-        allowSpace = true;
+        stay.disabled = stayInitial;
+        deal.disabled = dealInitial;
+        hit.disabled = hitInitial;
+        allowSpace = allowSpaceInitial;
+        ///resets the functions to buttons the same they were at the moment of checking
       }, 3000); // Reupdates deck after 0.3 seconds
       const change_text = document.createElement("p");
       change_text.innerText = "DECK CHANGED";
@@ -739,11 +782,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dealer5.src = "";
     dealer6.src = "";
     player.src = "";
-    player0.src = "images/back_card.png";
-    player0.style.right = "2%"; // Ensure it's correctly positioned
-    player0.style.top = "35%"; // Reset top position
-    player0.style.left = "auto"; // Reset left if it was changed
-    player0.style.transform = "translate(0, 0)";
+    player0.src = "";
     hit1.src = "";
     hit2.src = "";
     hit3.src = "";
@@ -770,22 +809,44 @@ document.addEventListener("DOMContentLoaded", () => {
     allowSpace = false;
     stay.disabled = true;
     value_dealer_cnt += hidden_card_value;
-    if (caseAceDealer && !blackjack && value_dealer_cnt < 18)
+
+    if (caseAceDealer && !blackjack && value_dealer_cnt < 18) {
       value_dealer.innerText =
         "Dealer value: " +
         String(value_dealer_cnt) +
         "/" +
         String(value_dealer_cnt - 10);
-    else value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
+    } else {
+      value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
+    }
+    if (value_dealer_cnt < 17 || (value_dealer_cnt == 17 && caseAceDealer)) {
+      anime({
+        targets: "#dealer_card2",
+        left: "39%",
+        easing: "easeInOutQuad",
+        duration: 700,
+      });
+
+      anime({
+        targets: "#dealer_card1",
+        left: "28%",
+        easing: "easeInOutQuad",
+        duration: 700,
+      });
+    }
+
     dealer2.style.transformOrigin = "center center";
-    dealer2.style.transition =
-      "transform 0.5s ease-in-out, left 0.7s, right 0.7s";
+    dealer2.style.transition = "transform 0.5s ease-in-out";
+
+    // First, rotate the card
     dealer2.style.transform = "translate(-50%, -50%) rotateY(90deg)";
+
     setTimeout(() => {
       dealer2.src = hidden_card;
       dealer2.style.transform = "translate(-50%, -50%) rotateY(0deg)";
     }, 400);
   }
+
   ///turn hidden card
 
   ///dealer action
@@ -793,7 +854,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (
       (value_dealer_cnt >= 17 || cards_dealer >= 7) &&
       (aces11Involved_dealer == 0 || value_dealer_cnt != 17)
-      ///ensures dealerHit doesn t stop on soft 17
     ) {
       dealerDone = true;
       if (value_dealer_cnt == 21)
@@ -802,25 +862,76 @@ document.addEventListener("DOMContentLoaded", () => {
       checkWinner();
       return;
     }
+
     cards_dealer += 1;
     randomj = Math.floor(Math.random() * cards.length);
     checkDeck();
+
+    let dealerx_img;
+    let id;
     switch (cards_dealer) {
       case 3:
-        dealer3.src = cards[randomj].image;
+        id = "dealer_card3";
         break;
       case 4:
-        dealer4.src = cards[randomj].image;
+        id = "dealer_card4";
         break;
       case 5:
-        dealer5.src = cards[randomj].image;
+        id = "dealer_card5";
         break;
       case 6:
-        dealer6.src = cards[randomj].image;
+        id = "dealer_card6";
         break;
       default:
-        break;
+        console.error(`Unexpected cards_dealer value: ${cards_dealer}`);
+        return;
     }
+
+    const dealerCard = document.getElementById(id);
+    if (!dealerCard) {
+      console.error(`Element with ID '${id}' not found!`);
+      return;
+    }
+
+    dealerx_img = cards[randomj].image;
+    dealerCard.src = "images/back_card.png";
+    dealerCard.style.transform = "translate(-50%,-50%)";
+
+    // 🚀 🔹 Add small delay before starting animation to prevent lag
+    setTimeout(() => {
+      anime({
+        targets: "#" + id,
+        top: "45%",
+        left: `${39 + (cards_dealer - 2) * 11}%`,
+        rotateY: { value: 45, duration: 50 },
+        easing: "easeInOutQuad",
+        duration: 500,
+        complete: function () {
+          dealerCard.src = dealerx_img;
+          anime({
+            targets: "#" + id,
+            rotateY: { value: 0, duration: 50 },
+            easing: "easeInOutQuad",
+            duration: 200,
+            complete: function () {
+              // ✅ Ensure smooth transition before calling next `dealerHit()`
+              setTimeout(() => {
+                if (
+                  value_dealer_cnt < 17 ||
+                  (value_dealer_cnt == 17 && caseAceDealer)
+                ) {
+                  requestAnimationFrame(() => dealerHit(cards_dealer));
+                } else {
+                  dealerDone = true;
+                  checkWinner();
+                }
+              }, 2000); // Reduce from 3000ms to make animations feel natural
+            },
+          });
+        },
+      });
+    }, 200); // 🔥 Small delay to prevent first laggy animation
+
     if (cards[randomj].value != "A") {
       value_dealer_cnt += parseInt(cards[randomj].value);
       if (!aces11Involved_dealer) {
@@ -839,74 +950,28 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
     } else {
-      console.log("HIT AN ACE!"); // Debugging
-      console.log("Before Ace Addition: value_player_cnt =", value_dealer_cnt);
-      console.log("aces11Involved_dealer =", aces11Involved_dealer);
       caseAceDealer = true;
       aces11Involved_dealer++;
       value_dealer_cnt += parseInt(cards[randomj].value11);
-      console.log("After Ace Addition: value_dealer_cnt =", value_dealer_cnt);
+
       if (value_dealer_cnt > 21) {
         aces11Involved_dealer--;
         value_dealer_cnt -= 10;
-        if (aces11Involved_dealer == 0) {
-          value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
-        } else {
-          value_dealer.innerText =
-            "Dealer value: " +
-            String(value_dealer_cnt) +
-            "/" +
-            String(value_dealer_cnt - 10);
-        }
-      } else {
-        if (value_dealer_cnt == 21) {
-          value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
-          console.log("Dealer reached 21, updating UI...");
-        } else {
-          value_dealer.innerText =
-            "Dealer value: " +
-            String(value_dealer_cnt) +
-            "/" +
-            String(value_dealer_cnt - 10);
-        }
       }
-      console.log("Final Display:", value_dealer.innerText);
+
+      if (aces11Involved_dealer == 0) {
+        value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
+      } else {
+        value_dealer.innerText =
+          "Dealer value: " +
+          String(value_dealer_cnt) +
+          "/" +
+          String(value_dealer_cnt - 10);
+      }
     }
+
     cards.splice(randomj, 1);
-    if (value_dealer_cnt > 17)
-      value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
-    setTimeout(() => {
-      dealerHit(cards_dealer);
-    }, 1000);
   }
-  ///dealer action
 
-  ///checking winner
-  function checkWinner() {
-    value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
-    if (value_dealer_cnt < value_player_cnt || value_dealer_cnt > 21) {
-      wins = parseInt(sessionStorage.getItem("wins"));
-      wins += 1;
-      wins_text.innerText = "Today Wins: " + String(wins);
-      sessionStorage.setItem("wins", String(wins));
-    } else if (value_dealer_cnt > value_player_cnt) {
-      loses = parseInt(sessionStorage.getItem("loses"));
-      loses += 1;
-      loses_text.innerText = "Today Loses: " + String(loses);
-      sessionStorage.setItem("loses", String(loses));
-    }
-  }
-  ///checking winner
-
-  ///space for hit
-  window.addEventListener("keydown", (e) => {
-    if (e.key === " " && allowSpace) {
-      allowSpace = false;
-      hit.click(); // Trigger the hit button
-      setTimeout(() => {
-        allowSpace = true; // Re-enable space after hit animation
-      }, 400); // Adjust delay based on animation speed
-    }
-  });
   ///space for hit
 });

@@ -3,11 +3,10 @@
   --golden-tone: rgb(196, 204, 109);
 }
 #table {
-  padding-top: 20px;
+  position: absolute !important;
   height: 70vh;
   width: 70vw;
   background-color: var(--golden-tone);
-  position: absolute;
   border: double;
   border-radius: 10px;
   border-width: 15px;
@@ -22,10 +21,12 @@
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 44%;
-  top: 45%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
-  transition: left 0.7s, right 0.7s;
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 #dealer_card2 {
   height: 120px;
@@ -43,44 +44,48 @@
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 50%;
-  top: 45%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
   backface-visibility: hidden;
-  will-change: transform; /* Optimizes rendering */
 }
 #dealer_card4 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 61%;
-  top: 45%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
   backface-visibility: hidden;
-  will-change: transform; /* Optimizes rendering */
 }
 #dealer_card5 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 72%;
-  top: 45%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
   backface-visibility: hidden;
-  will-change: transform; /* Optimizes rendering */
 }
 #dealer_card6 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 83%;
-  top: 45%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
   backface-visibility: hidden;
-  will-change: transform; /* Optimizes rendering */
 }
 /* #dealer_card2 {
   height: 120px;
@@ -104,15 +109,7 @@
   backface-visibility: hidden;
   will-change: transform; 
 } */
-#dealer {
-  height: 150px;
-  width: 150px;
-  border-radius: 12px;
-  position: absolute;
-  left: 50%;
-  top: 15%;
-  transform: translate(-50%, -50%);
-}
+
 #deal_button {
   position: absolute;
   height: 80px;
@@ -161,29 +158,44 @@
 #stay_button:active {
   background-color: rgb(116, 92, 254);
 }
+
 img[src=""] {
   display: none;
 }
-
+#deck {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 90%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
 #player_card {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 47%;
-  top: 85%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
+
 #player_card0 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  right: 2%;
-  top: 35%;
-  /* transform: translate(-50%, -50%); */
+  left: 90%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
   backface-visibility: hidden;
-  transform-origin: center;
 }
 #player_card1 {
   height: 120px;
