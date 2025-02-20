@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicButton = document.getElementById("playMusic");
   const pauseImg = document.getElementById("pause");
   const playImg = document.getElementById("play");
+  const dealerCards = [dealer1, dealer3, dealer4, dealer5, dealer6];
+  const player_cards = [hit1, hit2, hit3, hit4, hit5, hit6];
+
   let bjAnimation = false;
   let hidden_card;
   let hidden_card_value;
@@ -102,6 +105,21 @@ document.addEventListener("DOMContentLoaded", () => {
   let allowSpace = false;
   musicButton.disabled = true;
   let dealerDone = false;
+  ///aligning properly
+  dealerCards.forEach((card) => {
+    if (card) {
+      card.style.top = "40%";
+      card.style.left = "90%";
+      card.style.transform = "none";
+    }
+  });
+  player_cards.forEach((card) => {
+    if (card) {
+      card.style.left = "90%";
+      card.style.top = "40%";
+      card.style.transform = "none";
+    }
+  });
 
   ///music section
   // Load YouTube API only if it doesn't already exist
@@ -187,6 +205,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const animationSound = new Audio("audio/rock_sound.wav");
   const shotSound = new Audio("audio/shot.wav");
+  const cardSound = new Audio("audio/deal.wav");
 
   // Function to start the sound
   function playSound() {
@@ -198,6 +217,12 @@ document.addEventListener("DOMContentLoaded", () => {
   function playShotSound() {
     shotSound.currentTime = 0;
     shotSound
+      .play()
+      .catch((error) => console.error("Audio play failed:", error)); // Handle autoplay issues
+  }
+  function playCardSound() {
+    cardSound.currentTime = 0;
+    cardSound
       .play()
       .catch((error) => console.error("Audio play failed:", error)); // Handle autoplay issues
   }
@@ -234,6 +259,9 @@ document.addEventListener("DOMContentLoaded", () => {
         rotateY: { value: 45, duration: 50 }, // First rotate halfway
         easing: "easeInOutQuad",
         duration: 500,
+        begin: function () {
+          playCardSound();
+        },
         complete: function () {
           document.getElementById("player_card").src = player_img; // Change image mid-turn
 
@@ -267,6 +295,9 @@ document.addEventListener("DOMContentLoaded", () => {
           rotateY: { value: 45, duration: 50 }, // First rotate halfway
           easing: "easeInOutQuad",
           duration: 500,
+          begin: function () {
+            playCardSound();
+          },
           complete: function () {
             document.getElementById("dealer_card1").src = dealer1_img; // Change image mid-turn
 
@@ -305,6 +336,9 @@ document.addEventListener("DOMContentLoaded", () => {
             rotateY: { value: 45, duration: 50 }, // First rotate halfway
             easing: "easeInOutQuad",
             duration: 500,
+            begin: function () {
+              playCardSound();
+            },
             complete: function () {
               document.getElementById("player_card0").src = player0_img; // Change image mid-turn
 
@@ -341,6 +375,7 @@ document.addEventListener("DOMContentLoaded", () => {
           checkDeck();
           setTimeout(() => {
             dealer2.src = "images/back_card.png";
+            playCardSound();
             hidden_card = cards[randomi].image;
             if (cards[randomi].value == "A") {
               if (caseAceDealer == true) {
@@ -557,137 +592,173 @@ document.addEventListener("DOMContentLoaded", () => {
       if (value_player_cnt < 21) {
         cards_player += 1;
         randomj = Math.floor(Math.random() * cards.length);
+        let playerx_img;
+        let id;
         switch (cards_player) {
           case 1:
-            hit1.src = cards[randomj].image;
+            id = "player_card1";
             break;
           case 2:
-            hit2.src = cards[randomj].image;
+            id = "player_card2";
             break;
           case 3:
-            hit3.src = cards[randomj].image;
+            id = "player_card3";
             break;
           case 4:
-            hit4.src = cards[randomj].image;
+            id = "player_card4";
             break;
           case 5:
-            hit5.src = cards[randomj].image;
+            id = "player_card5";
             break;
           case 6:
-            hit6.src = cards[randomj].image;
+            id = "player_card6";
             break;
           default:
-            break;
+            console.error(`Unexpected cards_dealer value: ${cards_dealer}`);
+            return;
         }
 
-        if (cards[randomj].value != "A") {
-          value_player_cnt += parseInt(cards[randomj].value);
-          if (!aces11Involved) {
-            value_player.innerText = "Your value: " + String(value_player_cnt);
-          } else {
-            if (value_player_cnt > 21) {
-              value_player_cnt -= 10;
-              aces11Involved--;
-              value_player.innerText =
-                "Your value: " + String(value_player_cnt);
-            } else {
-              value_player.innerText =
-                "Your value: " +
-                String(value_player_cnt) +
-                "/" +
-                String(value_player_cnt - 10);
-            }
-          }
-        } else {
-          console.log("HIT AN ACE!"); // Debugging
-          console.log(
-            "Before Ace Addition: value_player_cnt =",
-            value_player_cnt
-          );
-          console.log("aces11Involved =", aces11Involved);
-          caseAcePlayer = true;
-          aces11Involved++;
-          value_player_cnt += parseInt(cards[randomj].value11);
-          console.log(
-            "After Ace Addition: value_player_cnt =",
-            value_player_cnt
-          );
-          if (value_player_cnt > 21) {
-            aces11Involved--;
-            value_player_cnt -= 10;
+        const playerCard = document.getElementById(id);
+        if (!playerCard) {
+          console.error(`Element with ID '${id}' not found!`);
+          return;
+        }
+
+        playerx_img = cards[randomj].image;
+        playerCard.src = "images/back_card.png";
+        playerCard.style.transform = "translate(-50%,-50%)";
+        anime({
+          targets: "#" + id,
+          top: "85%",
+          left: `${49 + cards_player * 2}%`,
+          rotateY: { value: 44, duration: 50 },
+          easing: "easeInOutQuad",
+          duration: 500,
+          begin: function () {
+            cardSound.play();
+          },
+          complete: function () {
+            playerCard.src = playerx_img;
+            anime({
+              targets: "#" + id,
+              rotateY: { value: 0, duration: 50 },
+              easing: "easeInOutQuad",
+              duration: 200,
+            });
+          },
+        });
+        setTimeout(() => {
+          if (cards[randomj].value != "A") {
+            value_player_cnt += parseInt(cards[randomj].value);
             if (!aces11Involved) {
               value_player.innerText =
                 "Your value: " + String(value_player_cnt);
             } else {
-              value_player.innerText =
-                "Your value: " +
-                String(value_player_cnt) +
-                "/" +
-                String(value_player_cnt - 10);
+              if (value_player_cnt > 21) {
+                value_player_cnt -= 10;
+                aces11Involved--;
+                value_player.innerText =
+                  "Your value: " + String(value_player_cnt);
+              } else {
+                value_player.innerText =
+                  "Your value: " +
+                  String(value_player_cnt) +
+                  "/" +
+                  String(value_player_cnt - 10);
+              }
             }
           } else {
-            if (value_player_cnt == 21) {
-              value_player.innerText =
-                "Your value: " + String(value_player_cnt);
-              console.log("Player reached 21, updating UI...");
+            console.log("HIT AN ACE!"); // Debugging
+            console.log(
+              "Before Ace Addition: value_player_cnt =",
+              value_player_cnt
+            );
+            console.log("aces11Involved =", aces11Involved);
+            caseAcePlayer = true;
+            aces11Involved++;
+            value_player_cnt += parseInt(cards[randomj].value11);
+            console.log(
+              "After Ace Addition: value_player_cnt =",
+              value_player_cnt
+            );
+            if (value_player_cnt > 21) {
+              aces11Involved--;
+              value_player_cnt -= 10;
+              if (!aces11Involved) {
+                value_player.innerText =
+                  "Your value: " + String(value_player_cnt);
+              } else {
+                value_player.innerText =
+                  "Your value: " +
+                  String(value_player_cnt) +
+                  "/" +
+                  String(value_player_cnt - 10);
+              }
             } else {
-              value_player.innerText =
-                "Your value: " +
-                String(value_player_cnt) +
-                "/" +
-                String(value_player_cnt - 10);
+              if (value_player_cnt == 21) {
+                value_player.innerText =
+                  "Your value: " + String(value_player_cnt);
+                console.log("Player reached 21, updating UI...");
+              } else {
+                value_player.innerText =
+                  "Your value: " +
+                  String(value_player_cnt) +
+                  "/" +
+                  String(value_player_cnt - 10);
+              }
             }
+            console.log("Final Display:", value_player.innerText);
           }
-          console.log("Final Display:", value_player.innerText);
-        }
-        console.log(aces11Involved + "cx");
-        cards.splice(randomj, 1);
-        if (value_player_cnt > 21) {
-          busted = true;
-          const busted_text = document.createElement("p");
-          busted_text.innerText = "YOU BUSTED";
-          busted_text.style.fontFamily = "'Times New Roman', Times, serif";
-          busted_text.style.fontSize = 40 + "px";
-          busted_text.style.position = "absolute";
-          busted_text.style.left = "50%";
-          busted_text.style.top = "55%";
-          busted_text.style.transform = "translate(-50%,-50%)";
-          busted_text.style.color = "#8A0303";
-          loses = parseInt(sessionStorage.getItem("loses"));
-          loses += 1;
-          loses_text.innerText = "Today Loses: " + String(loses);
-          sessionStorage.setItem("loses", String(loses));
-          table.appendChild(busted_text);
-          mockText.innerText = "HAHA";
-          mockText.style.left = "67%";
-          stay.disabled = true;
-          hit.disabled = true;
-          allowSpace = false;
-          setTimeout(() => {
-            table.removeChild(busted_text);
-            play_again();
-          }, 2000);
-        } else if (value_player_cnt == 21) {
-          ///
-          ///incepe dealerHit
-          value_player.innerText = "Your value: " + String(value_player_cnt);
-          stay.disabled = true;
-          hit.disabled = true;
-          allowSpace = false;
-          setTimeout(() => {
-            if (value_dealer_cnt < 17) {
-              dealer2.style.left = "39%";
-              dealer1.style.left = "28%";
-            }
+
+          console.log(aces11Involved + "cx");
+          cards.splice(randomj, 1);
+          if (value_player_cnt > 21) {
+            busted = true;
+            const busted_text = document.createElement("p");
+            busted_text.innerText = "YOU BUSTED";
+            busted_text.style.fontFamily = "'Times New Roman', Times, serif";
+            busted_text.style.fontSize = 40 + "px";
+            busted_text.style.position = "absolute";
+            busted_text.style.left = "50%";
+            busted_text.style.top = "55%";
+            busted_text.style.transform = "translate(-50%,-50%)";
+            busted_text.style.color = "#8A0303";
+            loses = parseInt(sessionStorage.getItem("loses"));
+            loses += 1;
+            loses_text.innerText = "Today Loses: " + String(loses);
+            sessionStorage.setItem("loses", String(loses));
+            table.appendChild(busted_text);
+            mockText.innerText = "HAHA";
+            mockText.style.left = "67%";
+            stay.disabled = true;
+            hit.disabled = true;
+            allowSpace = false;
             setTimeout(() => {
-              dealerHit(cards_dealer);
+              table.removeChild(busted_text);
+              play_again();
+            }, 2000);
+          } else if (value_player_cnt == 21) {
+            ///
+            ///incepe dealerHit
+            value_player.innerText = "Your value: " + String(value_player_cnt);
+            stay.disabled = true;
+            hit.disabled = true;
+            allowSpace = false;
+            setTimeout(() => {
+              if (value_dealer_cnt < 17) {
+                dealer2.style.left = "39%";
+                dealer1.style.left = "28%";
+              }
               setTimeout(() => {
-                play_again();
-              }, 3000);
+                dealerHit(cards_dealer);
+                setTimeout(() => {
+                  play_again();
+                }, 3000);
+              }, 700);
             }, 700);
-          }, 700);
-          turnHiddenCard();
-        }
+            turnHiddenCard();
+          }
+        }, 500);
       }
     }, 300);
   });
@@ -775,20 +846,9 @@ document.addEventListener("DOMContentLoaded", () => {
     aces11Involved = 0;
     aces11Involved_dealer = 0;
     mockText.innerText = "Still here?:)";
-    dealer1.src = "";
     dealer2.src = "";
-    dealer3.src = "";
-    dealer4.src = "";
-    dealer5.src = "";
-    dealer6.src = "";
     player.src = "";
     player0.src = "";
-    hit1.src = "";
-    hit2.src = "";
-    hit3.src = "";
-    hit4.src = "";
-    hit5.src = "";
-    hit6.src = "";
     value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
     value_player.innerText = "Your value: " + String(value_dealer_cnt);
     busted = false;
@@ -797,10 +857,43 @@ document.addEventListener("DOMContentLoaded", () => {
     cards_dealer = 2;
     dealerDone = false;
     bjAnimation = false;
+    anime.remove([
+      "#dealer_card3",
+      "#dealer_card4",
+      "#dealer_card5",
+      "#dealer_card6",
+      "#player_card1",
+      "#player_card2",
+      "#player_card3",
+      "#player_card4",
+      "#player_card5",
+      "#player_card6",
+    ]);
+    resetDealerCards();
+    resetPlayerCards();
     deal_cards();
   }
   ///play again
-
+  function resetDealerCards() {
+    dealerCards.forEach((card) => {
+      if (card) {
+        card.style.left = "90%";
+        card.style.top = "40%";
+        card.style.transform = "none";
+        card.src = "";
+      }
+    });
+  }
+  function resetPlayerCards() {
+    player_cards.forEach((elem) => {
+      if (elem) {
+        elem.style.top = "40%";
+        elem.style.left = "90%";
+        elem.style.transform = "none";
+        elem.src = "";
+      }
+    });
+  }
   ///turn hidden card
   function turnHiddenCard() {
     console.log("turnHiddenCard() called!"); // Debugging
@@ -819,7 +912,10 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
     }
-    if (value_dealer_cnt < 17 || (value_dealer_cnt == 17 && caseAceDealer)) {
+    if (
+      (value_dealer_cnt < 17 || (value_dealer_cnt == 17 && caseAceDealer)) &&
+      !blackjack
+    ) {
       anime({
         targets: "#dealer_card2",
         left: "39%",
@@ -897,7 +993,6 @@ document.addEventListener("DOMContentLoaded", () => {
     dealerCard.src = "images/back_card.png";
     dealerCard.style.transform = "translate(-50%,-50%)";
 
-    // 🚀 🔹 Add small delay before starting animation to prevent lag
     setTimeout(() => {
       anime({
         targets: "#" + id,
@@ -906,6 +1001,9 @@ document.addEventListener("DOMContentLoaded", () => {
         rotateY: { value: 45, duration: 50 },
         easing: "easeInOutQuad",
         duration: 500,
+        begin: function () {
+          cardSound.play();
+        },
         complete: function () {
           dealerCard.src = dealerx_img;
           anime({
@@ -915,6 +1013,7 @@ document.addEventListener("DOMContentLoaded", () => {
             duration: 200,
             complete: function () {
               // ✅ Ensure smooth transition before calling next `dealerHit()`
+
               setTimeout(() => {
                 if (
                   value_dealer_cnt < 17 ||
@@ -924,22 +1023,44 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else {
                   dealerDone = true;
                   checkWinner();
+                  return;
                 }
-              }, 2000); // Reduce from 3000ms to make animations feel natural
+              }, 1000);
             },
           });
         },
       });
-    }, 200); // 🔥 Small delay to prevent first laggy animation
-
-    if (cards[randomj].value != "A") {
-      value_dealer_cnt += parseInt(cards[randomj].value);
-      if (!aces11Involved_dealer) {
-        value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
+    }, 200);
+    setTimeout(() => {
+      if (cards[randomj].value != "A") {
+        value_dealer_cnt += parseInt(cards[randomj].value);
+        if (!aces11Involved_dealer) {
+          value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
+        } else {
+          if (value_dealer_cnt > 21) {
+            value_dealer_cnt -= 10;
+            aces11Involved_dealer--;
+            value_dealer.innerText =
+              "Dealer value: " + String(value_dealer_cnt);
+          } else {
+            value_dealer.innerText =
+              "Dealer value: " +
+              String(value_dealer_cnt) +
+              "/" +
+              String(value_dealer_cnt - 10);
+          }
+        }
       } else {
+        caseAceDealer = true;
+        aces11Involved_dealer++;
+        value_dealer_cnt += parseInt(cards[randomj].value11);
+
         if (value_dealer_cnt > 21) {
-          value_dealer_cnt -= 10;
           aces11Involved_dealer--;
+          value_dealer_cnt -= 10;
+        }
+
+        if (aces11Involved_dealer == 0) {
           value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
         } else {
           value_dealer.innerText =
@@ -949,29 +1070,34 @@ document.addEventListener("DOMContentLoaded", () => {
             String(value_dealer_cnt - 10);
         }
       }
-    } else {
-      caseAceDealer = true;
-      aces11Involved_dealer++;
-      value_dealer_cnt += parseInt(cards[randomj].value11);
 
-      if (value_dealer_cnt > 21) {
-        aces11Involved_dealer--;
-        value_dealer_cnt -= 10;
-      }
-
-      if (aces11Involved_dealer == 0) {
-        value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
-      } else {
-        value_dealer.innerText =
-          "Dealer value: " +
-          String(value_dealer_cnt) +
-          "/" +
-          String(value_dealer_cnt - 10);
-      }
-    }
-
-    cards.splice(randomj, 1);
+      cards.splice(randomj, 1);
+    }, 1000);
   }
 
   ///space for hit
+  window.addEventListener("keydown", (e) => {
+    if (e.key === " " && allowSpace) {
+      allowSpace = false;
+      hit.click(); // Trigger the hit button
+      setTimeout(() => {
+        allowSpace = true; // Re-enable space after hit animation
+      }, 400); // Adjust delay based on animation speed
+    }
+  });
+  ///space for hit
+  function checkWinner() {
+    value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
+    if (value_dealer_cnt < value_player_cnt || value_dealer_cnt > 21) {
+      wins = parseInt(sessionStorage.getItem("wins"));
+      wins += 1;
+      wins_text.innerText = "Today Wins: " + String(wins);
+      sessionStorage.setItem("wins", String(wins));
+    } else if (value_dealer_cnt > value_player_cnt) {
+      loses = parseInt(sessionStorage.getItem("loses"));
+      loses += 1;
+      loses_text.innerText = "Today Loses: " + String(loses);
+      sessionStorage.setItem("loses", String(loses));
+    }
+  }
 });

@@ -15,7 +15,15 @@
   top: 50%;
   transform: translate(-50%, -50%);
 }
-
+#levi {
+  height: 150px;
+  width: 150px;
+  border-radius: 12px;
+  position: absolute;
+  left: 50%;
+  top: 15%;
+  transform: translate(-50%, -50%);
+}
 #dealer_card1 {
   height: 120px;
   width: 100px;
@@ -168,9 +176,29 @@ img[src=""] {
   border-radius: 12px;
   position: absolute;
   left: 90%;
-  top: 40%;
+  top: 43%;
   transform: translate(-50%, -50%);
   z-index: -1;
+}
+#deck1 {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 90%;
+  top: 43%;
+  transform: translate(-50%, -50%);
+  z-index: -2;
+}
+#deck2 {
+  height: 120px;
+  width: 100px;
+  border-radius: 12px;
+  position: absolute;
+  left: 90%;
+  top: 39%;
+  transform: translate(-50%, -50%);
+  z-index: -3;
 }
 #player_card {
   height: 120px;
@@ -202,54 +230,72 @@ img[src=""] {
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 51%;
-  top: 85%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 #player_card2 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 53%;
-  top: 85%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 #player_card3 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 55%;
-  top: 85%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 #player_card4 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 57%;
-  top: 85%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 #player_card5 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 59%;
-  top: 85%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 #player_card6 {
   height: 120px;
   width: 100px;
   border-radius: 12px;
   position: absolute;
-  left: 61%;
-  top: 85%;
+  left: 90%;
+  top: 40%;
   transform: translate(-50%, -50%);
+  backface-visibility: visible;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 #pg_button {
   position: absolute;
@@ -326,7 +372,7 @@ button img {
     opacity: 1;
   }
   100% {
-    text-shadow: 0 0 5px #00f, 0 0 10px #00f;
+    text-shadow: 0 0 20px #00f, 0 0 30px #00f;
     opacity: 0.8;
   }
 }
@@ -335,7 +381,7 @@ button img {
   font-size: 20px;
   font-weight: bold;
   position: absolute;
-  animation: blinkingGlow 1s infinite alternate;
+  animation: blinkingGlow 3s infinite alternate;
   color: #00f;
 }
 #B,
@@ -372,4 +418,50 @@ button img {
 #K2 img {
   height: 60px;
   width: 60px;
+}
+#blackjackInfo {
+  position: absolute;
+  left: 100%;
+  top: 80%;
+  background-color: black;
+  color: white;
+  width: 75px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  border-radius: 10%;
+  border: dotted;
+  border-color: aliceblue;
+  transition: opacity 0.6s;
+  pointer-events: none;
+  font-size: 14px;
+}
+@keyframes blinkingWhiteGlow {
+  0% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+    opacity: 1;
+  }
+  33% {
+    text-shadow: 0 0 20px #fff, 0 0 30px #fff;
+    opacity: 0.8;
+  }
+  67% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+    opacity: 1;
+  }
+  100% {
+    text-shadow: 0 0 20px #fff, 0 0 30px #fff;
+    opacity: 0.8;
+  }
+}
+#box:hover #blackjackInfo {
+  opacity: 1;
+}
+
+/* Then, after 2s, start the blinking animation */
+#box:hover #blackjackInfo {
+  animation: blinkingWhiteGlow 3s infinite alternate;
+  animation-delay: 0.6s; /* ⏳ Wait for the fade-in transition to complete */
 }
