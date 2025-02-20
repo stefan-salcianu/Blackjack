@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicButton = document.getElementById("playMusic");
   const pauseImg = document.getElementById("pause");
   const playImg = document.getElementById("play");
+  const soundText = document.getElementById("soundText");
   const dealerCards = [dealer1, dealer3, dealer4, dealer5, dealer6];
   const player_cards = [hit1, hit2, hit3, hit4, hit5, hit6];
 
@@ -86,6 +87,12 @@ document.addEventListener("DOMContentLoaded", () => {
   mockText.style.top = "10%";
   mockText.style.left = "60%";
   mockText.style.color = "darkgrey";
+  let soundBar = document.getElementById("soundRange");
+  // soundBar.type = "range";
+  // soundBar.step = 0.1;
+  // soundBar.min = 0.0;
+  // soundBar.max = 1;
+  // table.appendChild(soundBar);
   table.appendChild(value_dealer);
   table.appendChild(value_player);
   table.appendChild(wins_text);
@@ -103,7 +110,6 @@ document.addEventListener("DOMContentLoaded", () => {
   let caseAceDealer = false;
   let caseAcePlayer = false;
   let allowSpace = false;
-  musicButton.disabled = true;
   let dealerDone = false;
   ///aligning properly
   dealerCards.forEach((card) => {
@@ -120,78 +126,6 @@ document.addEventListener("DOMContentLoaded", () => {
       card.style.transform = "none";
     }
   });
-
-  ///music section
-  // Load YouTube API only if it doesn't already exist
-  if (!window.YT) {
-    console.log("🚀 Manually loading YouTube API...");
-    var tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName("script")[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-  } else {
-  }
-
-  var ytplayer;
-  var isPlaying = false;
-  function onYouTubeIframeAPIReady() {
-    ytplayer = new YT.Player("ytplayer", {
-      height: "0",
-      width: "0",
-      videoId: "PaFHwTjy1yE",
-      playerVars: {
-        autoplay: 0,
-        controls: 0,
-        mute: 0,
-      },
-      events: {
-        onReady: function (event) {
-          let musicButton = document.getElementById("playMusic");
-          if (!musicButton) {
-            return;
-          }
-
-          musicButton.addEventListener("click", function () {
-            if (!ytplayer || typeof ytplayer.playVideo !== "function") {
-              return;
-            }
-
-            console.log(
-              "🎵 Button clicked. Video state:",
-              ytplayer.getPlayerState()
-            );
-
-            ytplayer.unMute(); // Ensure sound plays
-
-            if (isPlaying) {
-              ytplayer.pauseVideo();
-            } else {
-              ytplayer.playVideo();
-            }
-            isPlaying = !isPlaying;
-          });
-        },
-      },
-    });
-  }
-
-  setTimeout(() => {
-    if (!window.YT) {
-      console.error("YouTube API still not loaded! Something is blocking it.");
-    } else if (!ytplayer) {
-      console.error("ytplayer is still undefined! Forcing initialization...");
-      onYouTubeIframeAPIReady(); // Try forcing initialization
-    } else {
-      console.log("YouTube Player is now ready!");
-    }
-    musicButton.disabled = false;
-  }, 4000); // Wait 5 seconds to allow API to load
-  musicButton.addEventListener("click", () => {
-    pauseImg.classList.toggle("hidden");
-    playImg.classList.toggle("hidden");
-  });
-  ///music section
-
   fetch("blackjack.json")
     .then((response) => response.json())
     .then((data) => {
@@ -206,7 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const animationSound = new Audio("audio/rock_sound.wav");
   const shotSound = new Audio("audio/shot.wav");
   const cardSound = new Audio("audio/deal.wav");
-
+  const jazzSound = new Audio("audio/jazz.mp3");
+  animationSound.volume = 0.5;
+  shotSound.volume = 0.5;
+  cardSound.volume = 0.5;
+  jazzSound.volume = 0.5;
   // Function to start the sound
   function playSound() {
     animationSound.currentTime = 0;
@@ -226,7 +164,41 @@ document.addEventListener("DOMContentLoaded", () => {
       .play()
       .catch((error) => console.error("Audio play failed:", error)); // Handle autoplay issues
   }
-
+  function playAmbient() {
+    jazzSound.play();
+    jazzSound.loop = true;
+  }
+  musicButton.addEventListener("click", () => {
+    pauseImg.classList.toggle("hidden");
+    playImg.classList.toggle("hidden");
+    if (playImg.classList.contains("hidden")) {
+      jazzSound.pause();
+    } else playAmbient();
+  });
+  ///volume control
+  soundBar.addEventListener("input", () => {
+    animationSound.volume = soundBar.value;
+    cardSound.volume = soundBar.value;
+    shotSound.volume = soundBar.value;
+    jazzSound.volume = soundBar.value;
+    soundText.innerText =
+      String(Math.floor(parseFloat(soundBar.value) * 100)) + "%";
+    let newPosition = parseFloat(soundBar.value) * 91;
+    soundText.style.left = `${newPosition}%`;
+    soundText.style.opacity = "1";
+  });
+  soundBar.addEventListener("change", () => {
+    setTimeout(() => {
+      soundText.style.opacity = "0";
+    }, 1000);
+  });
+  soundBar.addEventListener("mouseenter", () => {
+    soundText.style.opacity = "1";
+  });
+  soundBar.addEventListener("mouseleave", () => {
+    soundText.style.opacity = "0";
+  });
+  ///volume control
   // Function to stop the sound
   function stopSound() {
     animationSound.pause();
