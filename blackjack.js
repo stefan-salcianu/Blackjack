@@ -386,9 +386,6 @@ document.addEventListener("DOMContentLoaded", () => {
               hidden_card_value = parseInt(cards[randomi].value);
             }
             cards.splice(randomi, 1);
-            hit.disabled = false;
-            stay.disabled = false;
-            allowSpace = true;
             if (
               value_player_cnt == 21 ||
               (value_dealer_cnt + hidden_card_value == 21 &&
@@ -433,6 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   },
                   begin: function () {
                     playSound();
+                    jazzSound.pause();
                     document.querySelector("#box p").style.opacity = "0";
                     // 👈 Hide <p> when animation starts
                     document.querySelector("#box p").style.animation = "none";
@@ -525,6 +523,8 @@ document.addEventListener("DOMContentLoaded", () => {
                                 setTimeout(() => {
                                   play_again();
                                   stopSound();
+                                  jazzSound.play();
+                                  return;
                                 }, 1000);
                               },
                             });
@@ -568,6 +568,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 150);
       }, 150);
     }, 150);
+    if (value_player_cnt != 21 && value_dealer_cnt + hidden_card_value != 21)
+      setTimeout(() => {
+        hit.disabled = false;
+        stay.disabled = false;
+        allowSpace = true;
+      }, 1000);
   }
   ///deal function
   ///deal event
@@ -579,6 +585,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ///hit event
   hit.addEventListener("click", () => {
+    hit.disabled = true;
+    stay.disabled = true;
+    allowSpace = false;
     checkDeck();
     setTimeout(() => {
       if (value_player_cnt < 21) {
@@ -722,9 +731,6 @@ document.addEventListener("DOMContentLoaded", () => {
             table.appendChild(busted_text);
             mockText.innerText = "HAHA";
             mockText.style.left = "67%";
-            stay.disabled = true;
-            hit.disabled = true;
-            allowSpace = false;
             setTimeout(() => {
               table.removeChild(busted_text);
               play_again();
@@ -733,9 +739,6 @@ document.addEventListener("DOMContentLoaded", () => {
             ///
             ///incepe dealerHit
             value_player.innerText = "Your value: " + String(value_player_cnt);
-            stay.disabled = true;
-            hit.disabled = true;
-            allowSpace = false;
             setTimeout(() => {
               if (value_dealer_cnt < 17) {
                 dealer2.style.left = "39%";
@@ -753,6 +756,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 500);
       }
     }, 300);
+    if (value_player_cnt < 21)
+      setTimeout(() => {
+        hit.disabled = false;
+        stay.disabled = false;
+        allowSpace = true;
+      }, 1500);
   });
   ///hit event
 
@@ -1074,7 +1083,7 @@ document.addEventListener("DOMContentLoaded", () => {
       hit.click(); // Trigger the hit button
       setTimeout(() => {
         allowSpace = true; // Re-enable space after hit animation
-      }, 400); // Adjust delay based on animation speed
+      }, 1000); // Adjust delay based on animation speed
     }
   });
   ///space for hit
