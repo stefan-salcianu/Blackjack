@@ -466,12 +466,14 @@ button img {
   animation-delay: 0.6s; /* ⏳ Wait for the fade-in transition to complete */
 }
 #soundRange {
-  width: 300px;
-  height: 5px; /* Thickness of the track */
-  background: #000; /* Track background */
+  height: 5px;
+  background: #000;
   border-radius: 5px;
   outline: none;
   appearance: none;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 400px;
 }
 #soundRange::-webkit-slider-thumb {
   appearance: none;
@@ -487,20 +489,41 @@ button img {
 #soundBox {
   position: absolute;
   right: 5%;
-  width: 300px;
-  height: 50px;
+  width: 400px;
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 10px;
 }
+
 #soundBox p {
-  padding-inline: 5px;
-  position: absolute;
+  margin-top: 0;
   color: white;
   font-family: "Times New Roman", Times, serif;
   font-size: 20px;
-  font-weight: 500;
-  left: 45%;
+  font-weight: 700;
+  text-align: start;
+  margin-left: 8px;
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
-#soundRange:hover + #soundBox p {
+
+#soundBox:hover p {
+  /* Fix hover issue */
   opacity: 1;
+}
+
+#soundBox img {
+  height: 40px;
+}
+
+#soundBox div {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 0;
 }

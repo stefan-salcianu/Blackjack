@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pauseImg = document.getElementById("pause");
   const playImg = document.getElementById("play");
   const soundText = document.getElementById("soundText");
+  const soundIcon = document.getElementById("soundIcon");
   const dealerCards = [dealer1, dealer3, dealer4, dealer5, dealer6];
   const player_cards = [hit1, hit2, hit3, hit4, hit5, hit6];
 
@@ -182,10 +183,29 @@ document.addEventListener("DOMContentLoaded", () => {
     shotSound.volume = soundBar.value;
     jazzSound.volume = soundBar.value;
     soundText.innerText =
-      String(Math.floor(parseFloat(soundBar.value) * 100)) + "%";
-    let newPosition = parseFloat(soundBar.value) * 91;
-    soundText.style.left = `${newPosition}%`;
+      "Volume: " + String(Math.floor(parseFloat(soundBar.value) * 100)) + "%";
     soundText.style.opacity = "1";
+    if (soundBar.value == 0) {
+      anime({
+        targets: "#soundIcon",
+        rotate: 360,
+        duration: 500,
+        easing: "easeInOutQuad",
+        complete: function () {
+          soundIcon.src = "images/sound_off-removebg-preview.png";
+        },
+      });
+    } else {
+      anime({
+        targets: "#soundIcon",
+        rotate: 0,
+        duration: 500,
+        easing: "easeInOutQuad",
+        complete: function () {
+          soundIcon.src = "images/sound_on-removebg-preview.png";
+        },
+      });
+    }
   });
   soundBar.addEventListener("change", () => {
     setTimeout(() => {
