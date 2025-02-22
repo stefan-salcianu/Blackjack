@@ -577,10 +577,63 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   ///deal function
   ///deal event
+
   deal.addEventListener("click", () => {
     console.log("deal");
-    deal_cards();
+
+    // Reset CSS conflicts
+    deal.style.transition = "none"; // Remove conflicting transition
+    deal.style.left = "50%";
+    deal.style.bottom = "16%";
+    deal.style.transform = "translate(-50%)"; // Ensure it starts correctly
+    deal.style.animation = "none";
+    deal.style.pointerEvents = "none";
+    anime({
+      targets: "#deal_button",
+      // Shrinks a bit before moving
+      width: "2%",
+      easing: "easeInOutQuart", // LINEAR animation
+      padding: 0,
+      duration: 1200,
+      complete() {
+        anime({
+          begin() {
+            anime({
+              targets: "#deal_button",
+              height: "30px",
+              easing: "easeInOutQuart",
+              duration: 500,
+            });
+          },
+          delay: 700,
+          targets: "#deal_button",
+          left: "10%", // Moves left smoothly
+          bottom: "90%", // Moves up smoothly
+          opacity: 0, // Fades out
+          easing: "easeInOutQuad", // Constant speed
+          duration: 1000, // Adjust speed as needed
+          complete() {
+            jazzSound.play();
+            pauseImg.classList.toggle("hidden");
+            playImg.classList.toggle("hidden");
+
+            deal_cards(); // Call function after animation finishes
+          },
+        });
+      },
+    });
+    anime({
+      targets: "#deal_button .btn-text",
+      fontSize: 0,
+      opacity: 0,
+      easing: "easeInOutSine",
+      duration: 300,
+      begin() {
+        document.querySelectorAll(".btn-text")[0].style.margin = "0px";
+      },
+    });
   });
+
   ///deal event
 
   ///hit event

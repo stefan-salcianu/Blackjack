@@ -1,6 +1,7 @@
 :root {
   --grey-tone: silver;
   --golden-tone: rgb(196, 204, 109);
+  --blue-tone: rgb(144, 229, 200);
 }
 #table {
   position: absolute !important;
@@ -117,56 +118,75 @@
   backface-visibility: hidden;
   will-change: transform; 
 } */
-
+@keyframes blinkingWhiteGlow {
+  0% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+    opacity: 1;
+  }
+  33% {
+    text-shadow: 0 0 20px #fff, 0 0 30px #fff;
+    opacity: 0.8;
+  }
+  67% {
+    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
+    opacity: 1;
+  }
+  100% {
+    text-shadow: 0 0 20px #fff, 0 0 30px #fff;
+    opacity: 0.8;
+  }
+}
+@keyframes blinkingGoldenGlow {
+  25% {
+    text-shadow: 0 0 5px #c4cc6d, 0 0 10px #c4cc6d;
+    opacity: 0.8;
+  }
+  50% {
+    text-shadow: 0 0 20px #c4cc6d, 0 0 30px #c4cc6d;
+    opacity: 1;
+  }
+  75% {
+    text-shadow: 0 0 5px #c4cc6d, 0 0 10px #c4cc6d;
+    opacity: 0.8;
+  }
+  100% {
+    text-shadow: 0 0 20px #c4cc6d, 0 0 30px #c4cc6d;
+    opacity: 0.8;
+  }
+}
 #deal_button {
-  background: linear-gradient(145deg, #1a1a1a, #111);
+  width: 300px;
+  height: 90px;
+  background-color: black;
   color: var(--golden-tone);
-  font-size: 22px;
+  font-size: 25px;
   font-weight: bold;
-  padding: 16px 38px;
-  border: 3px solid var(--golden-tone);
+  padding: 16px 16px;
+  border: 3px solid var(--blue-tone);
   border-radius: 12px;
   text-transform: uppercase;
   letter-spacing: 3px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   position: absolute;
-  bottom: 12%;
-  left: 70%;
-  transform: translateX(-50%);
-  box-shadow: 0 0 15px rgba(196, 204, 109, 0.3);
   font-family: "Times New Roman", Times, serif;
-}
-
-#deal_button::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  border-radius: 16px;
-  background: rgba(196, 204, 109, 0.2);
-  filter: blur(12px);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.4s ease-in-out;
+  animation: blinkingGoldenGlow 3s infinite alternate;
+  left: 50%;
+  bottom: 16%;
+  transform: translate(-50%);
+  z-index: 1002;
+  overflow: hidden;
 }
 
 #deal_button:hover {
-  background: #222;
+  background: grey;
   color: white;
-  box-shadow: 0 0 30px rgba(196, 204, 109, 0.6);
+  animation: blinkingWhiteGlow 3s infinite alternate;
+}
+.btn-text {
+  margin-top: 0px;
 }
 
-#deal_button:hover::before {
-  opacity: 1;
-}
-
-#deal_button:active {
-  transform: scale(0.95);
-  box-shadow: 0 0 20px rgba(196, 204, 109, 0.4);
-}
 #hit_button {
   position: absolute;
   height: 80px;
@@ -347,7 +367,7 @@ img[src=""] {
   background-color: darkgoldenrod;
 }
 #playMusic {
-  background-color: rgb(144, 229, 200);
+  background-color: var(--blue-tone);
   height: 40px;
   width: 40px;
   position: absolute;
@@ -471,24 +491,7 @@ button img {
   pointer-events: none;
   font-size: 14px;
 }
-@keyframes blinkingWhiteGlow {
-  0% {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
-    opacity: 1;
-  }
-  33% {
-    text-shadow: 0 0 20px #fff, 0 0 30px #fff;
-    opacity: 0.8;
-  }
-  67% {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff;
-    opacity: 1;
-  }
-  100% {
-    text-shadow: 0 0 20px #fff, 0 0 30px #fff;
-    opacity: 0.8;
-  }
-}
+
 #box:hover #blackjackInfo {
   opacity: 1;
 }
