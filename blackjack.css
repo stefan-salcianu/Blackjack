@@ -162,7 +162,7 @@
   font-size: 25px;
   font-weight: bold;
   padding: 16px 16px;
-  border: 3px solid var(--blue-tone);
+  border: 3px dotted whitesmoke;
   border-radius: 12px;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -170,7 +170,7 @@
   transition: all 0.3s ease-in-out;
   position: absolute;
   font-family: "Times New Roman", Times, serif;
-  animation: blinkingGoldenGlow 3s infinite alternate;
+  animation: blinkingGoldenGlow 6s infinite alternate;
   left: 50%;
   bottom: 16%;
   transform: translate(-50%);
@@ -181,7 +181,7 @@
 #deal_button:hover {
   background: grey;
   color: white;
-  animation: blinkingWhiteGlow 3s infinite alternate;
+  animation: blinkingWhiteGlow 6s infinite alternate;
 }
 .btn-text {
   margin-top: 0px;
@@ -360,7 +360,7 @@ img[src=""] {
   font-size: 25px;
   font-family: "Times New Roman", Times, serif;
   border: solid;
-  left: 79%;
+  left: 100%;
   top: 65%;
 }
 #pg_button:active {
@@ -390,6 +390,7 @@ button img {
   width: 30px;
 }
 .hidden {
+  transition: display 3s;
   display: none;
 }
 #box {
@@ -562,4 +563,50 @@ button img {
   align-items: center;
   margin-top: 10px;
   margin-bottom: 0;
+}
+#practice_button {
+  width: 80px;
+  height: 60px;
+  border: #c4cc6d 3px dotted;
+  border-radius: 5%;
+  color: white;
+  background-color: rgb(233, 96, 81);
+  position: absolute;
+  top: 10%;
+  animation: blinkingWhiteGlow 6s infinite alternate;
+  font-size: 20px;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+  z-index: 1005;
+  box-sizing: content-box;
+  margin-right: 5px;
+}
+#practice_button:hover {
+  background-color: rgb(210, 69, 53);
+  cursor: pointer;
+}
+#practice_button:active {
+  background-color: rgb(115, 68, 63);
+  animation: none;
+  cursor: pointer;
+}
+#bustOdds_hit {
+  font-size: 24px;
+  font-weight: bold;
+  color: whitesmoke;
+  font-family: "Times New Roman", Times, serif;
+  animation: blinkingWhiteGlow 6s infinite alternate;
+  position: absolute;
+  left: 73%;
+  top: 68%;
+}
+#odds_stay {
+  font-size: 24px;
+  font-weight: bold;
+  color: whitesmoke;
+  font-family: "Times New Roman", Times, serif;
+  animation: blinkingWhiteGlow 6s infinite alternate;
+  position: absolute;
+  left: 85%;
+  top: 68%;
 }

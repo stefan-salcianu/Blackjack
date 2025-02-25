@@ -23,6 +23,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const playImg = document.getElementById("play");
   const soundText = document.getElementById("soundText");
   const soundIcon = document.getElementById("soundIcon");
+  const bustOdds_hit = document.getElementById("bustOdds_hit");
+  const bustOdds_stay = document.getElementById("bustOdds_stay");
+  const practice = document.getElementById("practice_button");
   const dealerCards = [dealer1, dealer3, dealer4, dealer5, dealer6];
   const player_cards = [hit1, hit2, hit3, hit4, hit5, hit6];
 
@@ -107,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
   hit.disabled = true;
   stay.disabled = true;
   again.disabled = true;
+  practice.disabled = true;
   let blackjack = false;
   let caseAceDealer = false;
   let caseAcePlayer = false;
@@ -167,9 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   function playAmbient() {
     jazzSound.play();
-    jazzSound.loop = true;
   }
+  jazzSound.addEventListener("ended", () => {
+    jazzSound.currentTime = 0;
+    jazzSound.play();
+  });
   musicButton.addEventListener("click", () => {
+    musicButton.blur();
     pauseImg.classList.toggle("hidden");
     playImg.classList.toggle("hidden");
     if (playImg.classList.contains("hidden")) {
@@ -573,6 +581,8 @@ document.addEventListener("DOMContentLoaded", () => {
         hit.disabled = false;
         stay.disabled = false;
         allowSpace = true;
+        practice.disabled = false;
+        bustOddsCalculate();
       }, 1000);
   }
   ///deal function
@@ -580,7 +590,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   deal.addEventListener("click", () => {
     console.log("deal");
-
+    deal.blur();
     // Reset CSS conflicts
     deal.style.transition = "none"; // Remove conflicting transition
     deal.style.left = "50%";
@@ -638,6 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ///hit event
   hit.addEventListener("click", () => {
+    hit.blur();
     hit.disabled = true;
     stay.disabled = true;
     allowSpace = false;
@@ -814,12 +825,14 @@ document.addEventListener("DOMContentLoaded", () => {
         hit.disabled = false;
         stay.disabled = false;
         allowSpace = true;
-      }, 1500);
+        bustOddsCalculate();
+      }, 1100);
   });
   ///hit event
 
   ///stay event
   stay.addEventListener("click", () => {
+    stay.blur();
     hit.disabled = true;
     allowSpace = false;
     value_player.innerText = "Your value: " + String(value_player_cnt);
@@ -829,7 +842,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       checkDone();
     }, 1400);
-
+    bustOdds_hit.innerText = "Good luck!";
     turnHiddenCard();
   });
   ///stay event
@@ -876,9 +889,6 @@ document.addEventListener("DOMContentLoaded", () => {
       change_text.style.transform = "translate(-50%,-50%)";
       change_text.style.color = "#8A0303";
       table.appendChild(change_text);
-      hit.disabled = true;
-      allowSpace = false;
-      stay.disabled = true;
     }
   }
   ///checking if deck needs changed
@@ -1001,23 +1011,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
   ///dealer action
   function dealerHit(cards_dealer) {
+    // Stop condition: if dealer’s total is 17 or more (or if too many cards have been drawn)
     if (
       (value_dealer_cnt >= 17 || cards_dealer >= 7) &&
-      (aces11Involved_dealer == 0 || value_dealer_cnt != 17)
+      (aces11Involved_dealer === 0 || value_dealer_cnt !== 17)
     ) {
       dealerDone = true;
-      if (value_dealer_cnt == 21)
-        value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
-
+      if (value_dealer_cnt === 21) {
+        value_dealer.innerText = "Dealer value: " + value_dealer_cnt;
+      }
       checkWinner();
       return;
     }
 
-    cards_dealer += 1;
-    randomj = Math.floor(Math.random() * cards.length);
+    // Increment dealer card count
+    cards_dealer++;
+
+    // Draw a card at random from the deck and update the deck if needed
+    let randomj = Math.floor(Math.random() * cards.length);
     checkDeck();
 
-    let dealerx_img;
+    // Determine which dealer card element to update
     let id;
     switch (cards_dealer) {
       case 3:
@@ -1043,90 +1057,86 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    dealerx_img = cards[randomj].image;
+    let dealerx_img = cards[randomj].image;
     dealerCard.src = "images/back_card.png";
     dealerCard.style.transform = "translate(-50%,-50%)";
 
-    setTimeout(() => {
-      anime({
-        targets: "#" + id,
-        top: "45%",
-        left: `${39 + (cards_dealer - 2) * 11}%`,
-        rotateY: { value: 45, duration: 50 },
-        easing: "easeInOutQuad",
-        duration: 500,
-        begin: function () {
-          cardSound.play();
-        },
-        complete: function () {
-          dealerCard.src = dealerx_img;
-          anime({
-            targets: "#" + id,
-            rotateY: { value: 0, duration: 50 },
-            easing: "easeInOutQuad",
-            duration: 200,
-            complete: function () {
-              // ✅ Ensure smooth transition before calling next `dealerHit()`
-
-              setTimeout(() => {
-                if (
-                  value_dealer_cnt < 17 ||
-                  (value_dealer_cnt == 17 && caseAceDealer)
-                ) {
-                  requestAnimationFrame(() => dealerHit(cards_dealer));
+    // Animate card dealing and flip using anime.js
+    anime({
+      targets: "#" + id,
+      top: "45%",
+      left: `${39 + (cards_dealer - 2) * 11}%`,
+      rotateY: { value: 45, duration: 50 },
+      easing: "easeInOutQuad",
+      duration: 500,
+      begin: function () {
+        cardSound.play();
+      },
+      complete: function () {
+        // Change image mid-turn
+        dealerCard.src = dealerx_img;
+        anime({
+          targets: "#" + id,
+          rotateY: { value: 0, duration: 50 },
+          easing: "easeInOutQuad",
+          duration: 200,
+          complete: function () {
+            // Now update the dealer's total based on the drawn card
+            if (cards[randomj].value !== "A") {
+              value_dealer_cnt += parseInt(cards[randomj].value);
+              if (!aces11Involved_dealer) {
+                value_dealer.innerText = "Dealer value: " + value_dealer_cnt;
+              } else {
+                if (value_dealer_cnt > 21) {
+                  value_dealer_cnt -= 10;
+                  aces11Involved_dealer--;
+                  value_dealer.innerText = "Dealer value: " + value_dealer_cnt;
                 } else {
-                  dealerDone = true;
-                  checkWinner();
-                  return;
+                  value_dealer.innerText =
+                    "Dealer value: " +
+                    value_dealer_cnt +
+                    "/" +
+                    (value_dealer_cnt - 10);
                 }
+              }
+            } else {
+              caseAceDealer = true;
+              aces11Involved_dealer++;
+              value_dealer_cnt += parseInt(cards[randomj].value11);
+              if (value_dealer_cnt > 21) {
+                aces11Involved_dealer--;
+                value_dealer_cnt -= 10;
+              }
+              if (aces11Involved_dealer === 0) {
+                value_dealer.innerText = "Dealer value: " + value_dealer_cnt;
+              } else {
+                value_dealer.innerText =
+                  "Dealer value: " +
+                  value_dealer_cnt +
+                  "/" +
+                  (value_dealer_cnt - 10);
+              }
+            }
+
+            // Remove the used card from the deck
+            cards.splice(randomj, 1);
+
+            // After a short delay, check if the dealer should hit again
+            if (
+              value_dealer_cnt < 17 ||
+              (value_dealer_cnt === 17 && caseAceDealer)
+            ) {
+              setTimeout(() => {
+                dealerHit(cards_dealer);
               }, 1000);
-            },
-          });
-        },
-      });
-    }, 200);
-    setTimeout(() => {
-      if (cards[randomj].value != "A") {
-        value_dealer_cnt += parseInt(cards[randomj].value);
-        if (!aces11Involved_dealer) {
-          value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
-        } else {
-          if (value_dealer_cnt > 21) {
-            value_dealer_cnt -= 10;
-            aces11Involved_dealer--;
-            value_dealer.innerText =
-              "Dealer value: " + String(value_dealer_cnt);
-          } else {
-            value_dealer.innerText =
-              "Dealer value: " +
-              String(value_dealer_cnt) +
-              "/" +
-              String(value_dealer_cnt - 10);
-          }
-        }
-      } else {
-        caseAceDealer = true;
-        aces11Involved_dealer++;
-        value_dealer_cnt += parseInt(cards[randomj].value11);
-
-        if (value_dealer_cnt > 21) {
-          aces11Involved_dealer--;
-          value_dealer_cnt -= 10;
-        }
-
-        if (aces11Involved_dealer == 0) {
-          value_dealer.innerText = "Dealer value: " + String(value_dealer_cnt);
-        } else {
-          value_dealer.innerText =
-            "Dealer value: " +
-            String(value_dealer_cnt) +
-            "/" +
-            String(value_dealer_cnt - 10);
-        }
-      }
-
-      cards.splice(randomj, 1);
-    }, 1000);
+            } else {
+              dealerDone = true;
+              checkWinner();
+            }
+          },
+        });
+      },
+    });
   }
 
   ///space for hit
@@ -1153,5 +1163,45 @@ document.addEventListener("DOMContentLoaded", () => {
       loses_text.innerText = "Today Loses: " + String(loses);
       sessionStorage.setItem("loses", String(loses));
     }
+  }
+  practice.addEventListener("click", () => {
+    bustOdds_hit.classList.toggle("hidden");
+    bustOdds_stay.classList.toggle("hidden");
+    practice.blur();
+  });
+  function bustOddsCalculate() {
+    let possibleCases = cards.length;
+    if (possibleCases === 0) {
+      bustOdds_hit.innerText = "Bust Odds: N/A";
+      return;
+    }
+    let favorableCases = 0;
+    for (let i = 0; i < possibleCases; i++) {
+      let currentCard = cards[i];
+      if (currentCard.value == "A") {
+        if (aces11Involved == 0) {
+          if (
+            parseInt(currentCard.value1) + value_player_cnt <= 21 ||
+            parseInt(currentCard.value11) + value_player_cnt <= 21
+          ) {
+            favorableCases++;
+          }
+        } else {
+          favorableCases++;
+        }
+      } else {
+        if (aces11Involved) {
+          favorableCases++;
+        } else if (parseInt(currentCard.value) + value_player_cnt <= 21) {
+          favorableCases++;
+        }
+      }
+    }
+    let odds =
+      possibleCases === 0
+        ? 0
+        : parseFloat((100 - (favorableCases / possibleCases) * 100).toFixed(2));
+    bustOdds_hit.innerText = "Bust Odds: " + String(odds) + "%";
+    console.log("Bust Odds Calculated:", odds, "%");
   }
 });
