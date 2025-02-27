@@ -7,6 +7,7 @@
   position: absolute !important;
   height: 70vh;
   width: 70vw;
+  padding: 10px;
   background-color: var(--golden-tone);
   border: double;
   border-radius: 10px;
@@ -17,8 +18,8 @@
   transform: translate(-50%, -50%);
 }
 #levi {
-  height: 150px;
-  width: 150px;
+  height: auto;
+  width: 13%;
   border-radius: 12px;
   position: absolute;
   left: 50%;
@@ -26,8 +27,9 @@
   transform: translate(-50%, -50%);
 }
 #dealer_card1 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -38,19 +40,21 @@
   backface-visibility: hidden;
 }
 #dealer_card2 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 56%;
-  top: 45%;
+  top: 47%;
   transform: translate(-50%, -50%);
   backface-visibility: hidden;
   will-change: transform; /* Optimizes rendering */
 }
 #dealer_card3 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -61,8 +65,9 @@
   backface-visibility: hidden;
 }
 #dealer_card4 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -73,8 +78,9 @@
   backface-visibility: hidden;
 }
 #dealer_card5 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -85,8 +91,9 @@
   backface-visibility: hidden;
 }
 #dealer_card6 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -254,8 +261,9 @@ img[src=""] {
   z-index: -3;
 }
 #player_card {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -267,8 +275,9 @@ img[src=""] {
 }
 
 #player_card0 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -279,8 +288,9 @@ img[src=""] {
   backface-visibility: hidden;
 }
 #player_card1 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -291,8 +301,9 @@ img[src=""] {
   backface-visibility: hidden;
 }
 #player_card2 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 10%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -572,7 +583,7 @@ button img {
   color: white;
   background-color: rgb(233, 96, 81);
   position: absolute;
-  top: 10%;
+  top: 15%;
   animation: blinkingWhiteGlow 6s infinite alternate;
   font-size: 20px;
   font-weight: bold;

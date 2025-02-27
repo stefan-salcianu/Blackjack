@@ -290,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dealer1.style.transform = "translate(-50%,-50%)";
         anime({
           targets: "#dealer_card1",
-          top: "45%",
+          top: "47%",
           left: "44%",
           rotateY: { value: 45, duration: 50 }, // First rotate halfway
           easing: "easeInOutQuad",
@@ -1064,7 +1064,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Animate card dealing and flip using anime.js
     anime({
       targets: "#" + id,
-      top: "45%",
+      top: "47%",
       left: `${39 + (cards_dealer - 2) * 11}%`,
       rotateY: { value: 45, duration: 50 },
       easing: "easeInOutQuad",
