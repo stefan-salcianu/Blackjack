@@ -3,6 +3,15 @@
   --golden-tone: rgb(196, 204, 109);
   --blue-tone: rgb(144, 229, 200);
 }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
 #table {
   position: absolute !important;
   height: 70vh;
@@ -20,6 +29,7 @@
 #levi {
   height: auto;
   width: 13%;
+  min-width: 80px;
   border-radius: 12px;
   position: absolute;
   left: 50%;
@@ -28,7 +38,7 @@
 }
 #dealer_card1 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -41,7 +51,7 @@
 }
 #dealer_card2 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -53,7 +63,7 @@
 }
 #dealer_card3 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -66,7 +76,7 @@
 }
 #dealer_card4 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -79,7 +89,7 @@
 }
 #dealer_card5 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -92,7 +102,7 @@
 }
 #dealer_card6 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -162,11 +172,13 @@
   }
 }
 #deal_button {
-  width: 300px;
-  height: 90px;
+  width: 15vw;
+  height: 9vw;
+  min-width: 100px;
+  min-height: 60px;
   background-color: black;
   color: var(--golden-tone);
-  font-size: 25px;
+  font-size: clamp(12px, 2vw, 80px);
   font-weight: bold;
   padding: 16px 16px;
   border: 3px dotted whitesmoke;
@@ -196,15 +208,17 @@
 
 #hit_button {
   position: absolute;
-  height: 80px;
-  width: 80px;
+  height: 7vw;
+  width: 7vw;
+  min-width: 50px;
+  min-height: 50px;
   border-radius: 50%;
   background-color: rgb(3, 255, 3);
   color: rgb(0, 0, 0);
-  font-size: 25px;
+  font-size: clamp(12px, 2vw, 80px);
   font-family: "Times New Roman", Times, serif;
   border: solid;
-  left: 75%;
+  left: 70%;
   top: 80%;
 }
 #hit_button:active {
@@ -212,12 +226,14 @@
 }
 #stay_button {
   position: absolute;
-  height: 80px;
-  width: 80px;
+  height: 7vw;
+  width: 7vw;
+  min-width: 50px;
+  min-height: 50px;
   border-radius: 50%;
   background-color: rgb(3, 24, 255);
   color: rgb(255, 255, 255);
-  font-size: 25px;
+  font-size: clamp(12px, 2vw, 80px);
   font-family: "Times New Roman", Times, serif;
   border: solid;
   left: 85%;
@@ -231,8 +247,9 @@ img[src=""] {
   display: none;
 }
 #deck {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 9%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -241,8 +258,9 @@ img[src=""] {
   z-index: -1;
 }
 #deck1 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 9%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -251,8 +269,9 @@ img[src=""] {
   z-index: -2;
 }
 #deck2 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 9%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -262,7 +281,7 @@ img[src=""] {
 }
 #player_card {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -276,7 +295,7 @@ img[src=""] {
 
 #player_card0 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -289,7 +308,7 @@ img[src=""] {
 }
 #player_card1 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -302,7 +321,7 @@ img[src=""] {
 }
 #player_card2 {
   height: auto;
-  width: 10%;
+  width: 9%;
   min-width: 60px;
   border-radius: 12px;
   position: absolute;
@@ -314,8 +333,9 @@ img[src=""] {
   backface-visibility: hidden;
 }
 #player_card3 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 9%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -326,8 +346,9 @@ img[src=""] {
   backface-visibility: hidden;
 }
 #player_card4 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 9%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -338,8 +359,9 @@ img[src=""] {
   backface-visibility: hidden;
 }
 #player_card5 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 9%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -350,8 +372,9 @@ img[src=""] {
   backface-visibility: hidden;
 }
 #player_card6 {
-  height: 120px;
-  width: 100px;
+  height: auto;
+  width: 9%;
+  min-width: 60px;
   border-radius: 12px;
   position: absolute;
   left: 90%;
@@ -363,6 +386,7 @@ img[src=""] {
 }
 #pg_button {
   position: absolute;
+  display: none;
   height: 80px;
   width: 85px;
   border-radius: 10px;
@@ -379,13 +403,15 @@ img[src=""] {
 }
 #playMusic {
   background-color: var(--blue-tone);
-  height: 40px;
-  width: 40px;
+  height: 3vw;
+  width: 3vw;
+  min-height: 40px;
+  min-width: 40px;
   position: absolute;
   border-width: 5px;
   border-radius: 50%;
-  right: 0%;
-  top: 0%;
+  right: 1%;
+  top: 1%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -576,21 +602,25 @@ button img {
   margin-bottom: 0;
 }
 #practice_button {
-  width: 80px;
-  height: 60px;
+  width: 7vw;
+  height: 5vw;
+  min-width: 50px;
+  min-height: 50px;
   border: #c4cc6d 3px dotted;
   border-radius: 5%;
   color: white;
   background-color: rgb(233, 96, 81);
   position: absolute;
-  top: 15%;
+  top: 89%;
+  left: 45%;
   animation: blinkingWhiteGlow 6s infinite alternate;
-  font-size: 20px;
+  font-size: clamp(12px, 2vw, 80px);
   font-weight: bold;
   font-family: "Times New Roman", Times, serif;
   z-index: 1005;
   box-sizing: content-box;
-  margin-right: 5px;
+  padding: 2px;
+  margin: 1px 0px 1px;
 }
 #practice_button:hover {
   background-color: rgb(210, 69, 53);
@@ -602,16 +632,16 @@ button img {
   cursor: pointer;
 }
 #bustOdds_hit {
-  font-size: 24px;
+  font-size: clamp(16px, 2vw, 25px);
   font-weight: bold;
   color: whitesmoke;
   font-family: "Times New Roman", Times, serif;
   animation: blinkingWhiteGlow 6s infinite alternate;
   position: absolute;
-  left: 73%;
+  left: 70%;
   top: 68%;
 }
-#odds_stay {
+#bustOdds_stay {
   font-size: 24px;
   font-weight: bold;
   color: whitesmoke;
@@ -620,4 +650,5 @@ button img {
   position: absolute;
   left: 85%;
   top: 68%;
+  display: none;
 }
