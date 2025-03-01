@@ -1324,4 +1324,7 @@ document.addEventListener("DOMContentLoaded", () => {
     bustOdds_hit.innerText = "Bust Odds: " + String(odds) + "%";
     console.log("Bust Odds Calculated:", odds, "%");
   }
+  window.onerror = function (message, source, lineno, colno, error) {
+    document.body.innerHTML += `<p style="color:red;">Error: ${message} at ${source}:${lineno}</p>`;
+  };
 });
