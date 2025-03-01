@@ -218,7 +218,7 @@ body {
   font-size: clamp(12px, 2vw, 80px);
   font-family: "Times New Roman", Times, serif;
   border: solid;
-  left: 70%;
+  left: 68%;
   top: 80%;
 }
 #hit_button:active {
@@ -641,14 +641,33 @@ button img {
   left: 70%;
   top: 68%;
 }
-#bustOdds_stay {
-  font-size: 24px;
+#winOdds {
+  font-size: clamp(16px, 2vw, 25px);
   font-weight: bold;
   color: whitesmoke;
   font-family: "Times New Roman", Times, serif;
   animation: blinkingWhiteGlow 6s infinite alternate;
   position: absolute;
-  left: 85%;
-  top: 68%;
-  display: none;
+  left: 70%;
+  top: 63%;
+}
+#pushOdds {
+  font-size: clamp(16px, 2vw, 25px);
+  font-weight: bold;
+  color: whitesmoke;
+  font-family: "Times New Roman", Times, serif;
+  animation: blinkingWhiteGlow 6s infinite alternate;
+  position: absolute;
+  left: 70%;
+  top: 58%;
+}
+#loseOdds {
+  font-size: clamp(16px, 2vw, 25px);
+  font-weight: bold;
+  color: whitesmoke;
+  font-family: "Times New Roman", Times, serif;
+  animation: blinkingWhiteGlow 6s infinite alternate;
+  position: absolute;
+  left: 70%;
+  top: 53%;
 }

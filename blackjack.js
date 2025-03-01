@@ -24,7 +24,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const soundText = document.getElementById("soundText");
   const soundIcon = document.getElementById("soundIcon");
   const bustOdds_hit = document.getElementById("bustOdds_hit");
-  const bustOdds_stay = document.getElementById("bustOdds_stay");
+  const winOdds = document.getElementById("winOdds");
+  const loseOdds = document.getElementById("loseOdds");
+  const pushOdds = document.getElementById("pushOdds");
   const practice = document.getElementById("practice_button");
   const dealerCards = [dealer1, dealer3, dealer4, dealer5, dealer6];
   const player_cards = [hit1, hit2, hit3, hit4, hit5, hit6];
@@ -106,6 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let busted = false;
   let cards = [];
   let copy_cards = [];
+  let playerHand = [];
+  let dealerHand = { suit: "", value: "" };
   let game_over = false;
   hit.disabled = true;
   stay.disabled = true;
@@ -116,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let caseAcePlayer = false;
   let allowSpace = false;
   let dealerDone = false;
+
   ///aligning properly
   dealerCards.forEach((card) => {
     if (card) {
@@ -141,6 +146,53 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log(cards);
     })
     .catch((error) => console.error("Failed to fetch responses:", error));
+  async function sendDealtCards(dealtCards) {
+    await fetch("http://127.0.0.1:5000/remove_dealt_cards", {
+      method: "POST", // ✅ Must be POST
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ dealt_cards: dealtCards }),
+    });
+  }
+  async function simulateWinningOdds(playerHand, dealerCard) {
+    try {
+      console.log(
+        "🔍 Sending to Python:",
+        JSON.stringify({
+          player_hand: playerHand,
+          dealer_card: dealerCard,
+        })
+      );
+
+      const response = await fetch("http://127.0.0.1:5000/simulate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          player_hand: playerHand,
+          dealer_card: dealerCard,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`❌ Server Error: ${errorText}`);
+      }
+
+      const data = await response.json();
+      return data.probabilities;
+    } catch (error) {
+      console.error("❌ Fetch Error:", error);
+      return null; // Return null if there's an error
+    }
+  }
+
+  async function resetDeck() {
+    await fetch("http://127.0.0.1:5000/reset_deck", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    console.log("Deck reset in Python.");
+  }
 
   const animationSound = new Audio("audio/rock_sound.wav");
   const shotSound = new Audio("audio/shot.wav");
@@ -249,6 +301,14 @@ document.addEventListener("DOMContentLoaded", () => {
     randomj = Math.floor(Math.random() * cards.length);
     checkDeck();
     setTimeout(() => {
+      playerHand.push({
+        suit: cards[randomj].suit,
+        value: cards[randomj].value,
+      });
+
+      sendDealtCards([
+        { suit: cards[randomj].suit, value: cards[randomj].value },
+      ]);
       let player_img = cards[randomj].image;
       player.src = "images/back_card.png";
       player.style.transform = "translate(-50%,-50%)";
@@ -285,6 +345,12 @@ document.addEventListener("DOMContentLoaded", () => {
       randomi = Math.floor(Math.random() * cards.length);
       checkDeck();
       setTimeout(() => {
+        dealerHand.suit = cards[randomi].suit;
+        dealerHand.value = cards[randomi].value;
+
+        sendDealtCards([
+          { suit: cards[randomi].suit, value: cards[randomi].value },
+        ]);
         let dealer1_img = cards[randomi].image;
         dealer1.src = "images/back_card.png";
         dealer1.style.transform = "translate(-50%,-50%)";
@@ -326,6 +392,15 @@ document.addEventListener("DOMContentLoaded", () => {
         checkDeck();
 
         setTimeout(() => {
+          pauseImg;
+          playerHand.push({
+            suit: cards[randomj].suit,
+            value: cards[randomj].value,
+          });
+
+          sendDealtCards([
+            { suit: cards[randomj].suit, value: cards[randomj].value },
+          ]);
           let player0_img = cards[randomj].image;
           player0.src = "images/back_card.png";
           player0.style.transform = "translate(-50%,-50%)";
@@ -375,6 +450,9 @@ document.addEventListener("DOMContentLoaded", () => {
           checkDeck();
           setTimeout(() => {
             dealer2.src = "images/back_card.png";
+            sendDealtCards([
+              { suit: cards[randomi].suit, value: cards[randomi].value },
+            ]);
             playCardSound();
             hidden_card = cards[randomi].image;
             if (cards[randomi].value == "A") {
@@ -577,18 +655,26 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 150);
     }, 150);
     if (value_player_cnt != 21 && value_dealer_cnt + hidden_card_value != 21)
-      setTimeout(() => {
+      setTimeout(async () => {
         hit.disabled = false;
         stay.disabled = false;
         allowSpace = true;
         practice.disabled = false;
-        bustOddsCalculate();
+        throttledBustOddsCalculate();
+        console.log(playerHand[0].value);
+        console.log(playerHand[1].value);
+        console.log(dealerHand.value);
+        let Odds = await simulateWinningOdds(playerHand, dealerHand);
+        console.log(Odds);
+        winOdds.innerText = "WIN ODDS: " + Odds.win_percentage + "%";
+        pushOdds.innerText = "PUSH ODDS: " + Odds.push_percentage + "%";
+        loseOdds.innerText = "LOSE ODDS: " + Odds.loss_percentage + "%";
       }, 1000);
   }
   ///deal function
   ///deal event
 
-  deal.addEventListener("click", () => {
+  deal.addEventListener("click", async () => {
     console.log("deal");
     deal.blur();
     // Reset CSS conflicts
@@ -598,10 +684,12 @@ document.addEventListener("DOMContentLoaded", () => {
     deal.style.transform = "translate(-50%)"; // Ensure it starts correctly
     deal.style.animation = "none";
     deal.style.pointerEvents = "none";
+
+    // Send the first four cards (two for player, two for dealer) to the backend
     anime({
       targets: "#deal_button",
       // Shrinks a bit before moving
-      width: "2%",
+      width: "100vw",
       easing: "easeInOutQuart", // LINEAR animation
       padding: 0,
       duration: 1200,
@@ -610,9 +698,9 @@ document.addEventListener("DOMContentLoaded", () => {
           begin() {
             anime({
               targets: "#deal_button",
-              height: "30px",
+              height: "65vh",
               easing: "easeInOutQuart",
-              duration: 500,
+              duration: 600,
             });
           },
           delay: 700,
@@ -657,6 +745,13 @@ document.addEventListener("DOMContentLoaded", () => {
       if (value_player_cnt < 21) {
         cards_player += 1;
         randomj = Math.floor(Math.random() * cards.length);
+        playerHand.push({
+          suit: cards[randomj].suit,
+          value: cards[randomj].value,
+        });
+        sendDealtCards([
+          { suit: cards[randomj].suit, value: cards[randomj].value },
+        ]);
         let playerx_img;
         let id;
         switch (cards_player) {
@@ -821,14 +916,27 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }, 300);
     if (value_player_cnt < 21)
-      setTimeout(() => {
+      setTimeout(async () => {
         hit.disabled = false;
         stay.disabled = false;
         allowSpace = true;
-        bustOddsCalculate();
+        throttledBustOddsCalculate();
+        console.log(playerHand[cards_player + 1].value);
+        let Odds = await simulateWinningOdds(playerHand, dealerHand);
+        console.log(Odds);
+        winOdds.innerText = "WIN ODDS: " + Odds.win_percentage + "%";
+        pushOdds.innerText = "PUSH ODDS: " + Odds.push_percentage + "%";
+        loseOdds.innerText = "LOSE ODDS: " + Odds.loss_percentage + "%";
       }, 1100);
   });
   ///hit event
+  let bustOddsTimeout;
+  function throttledBustOddsCalculate() {
+    clearTimeout(bustOddsTimeout);
+    bustOddsTimeout = setTimeout(() => {
+      bustOddsCalculate();
+    }, 500); // Runs once every 500ms
+  }
 
   ///stay event
   stay.addEventListener("click", () => {
@@ -865,18 +973,26 @@ document.addEventListener("DOMContentLoaded", () => {
       hitInitial = hit.disabled;
       dealInitial = deal.disabled;
       allowSpaceInitial = allowSpace;
-      stay.disabled = true;
-      deal.disabled = true;
-      hit.disabled = true;
-      allowSpace = false;
+      console.log("Before resetDeck() call...");
+      resetDeck();
+      console.log("resetDeck() completed.");
+
+      console.log("Before copying cards...");
       cards = [...copy_cards];
+      console.log("Cards copied, new deck size:", cards.length);
+
+      console.log("Before enabling buttons...");
+      stay.disabled = stayInitial;
+      deal.disabled = dealInitial;
+      hit.disabled = hitInitial;
+      allowSpace = allowSpaceInitial;
+      console.log("Buttons re-enabled.");
+
+      resetDeck();
       setTimeout(() => {
         table.removeChild(change_text);
         console.log(copy_cards);
-        stay.disabled = stayInitial;
-        deal.disabled = dealInitial;
-        hit.disabled = hitInitial;
-        allowSpace = allowSpaceInitial;
+
         ///resets the functions to buttons the same they were at the moment of checking
       }, 3000); // Reupdates deck after 0.3 seconds
       const change_text = document.createElement("p");
@@ -889,6 +1005,7 @@ document.addEventListener("DOMContentLoaded", () => {
       change_text.style.transform = "translate(-50%,-50%)";
       change_text.style.color = "#8A0303";
       table.appendChild(change_text);
+      console.log("checkDeck() finished execution.");
     }
   }
   ///checking if deck needs changed
@@ -897,6 +1014,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function play_again() {
     console.log(cards.length);
     console.log(copy_cards.length);
+    playerHand = [];
     value_player_cnt = 0;
     value_dealer_cnt = 0;
     cards_player = 0;
@@ -1166,7 +1284,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   practice.addEventListener("click", () => {
     bustOdds_hit.classList.toggle("hidden");
-    bustOdds_stay.classList.toggle("hidden");
+    winOdds.classList.toggle("hidden");
+    loseOdds.classList.toggle("hidden");
+    pushOdds.classList.toggle("hidden");
     practice.blur();
   });
   function bustOddsCalculate() {
